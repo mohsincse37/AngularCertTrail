@@ -1,0 +1,15 @@
+F:\Work\CertificateDumps\server\CertificationsDumpMgt\Data\bin\Debug\net8.0\Data.deps.json
+F:\Work\CertificateDumps\server\CertificationsDumpMgt\Data\bin\Debug\net8.0\Data.runtimeconfig.json
+F:\Work\CertificateDumps\server\CertificationsDumpMgt\Data\bin\Debug\net8.0\Data.dll
+F:\Work\CertificateDumps\server\CertificationsDumpMgt\Data\bin\Debug\net8.0\Data.pdb
+F:\Work\CertificateDumps\server\CertificationsDumpMgt\Data\obj\Debug\net8.0\Data.csproj.AssemblyReference.cache
+F:\Work\CertificateDumps\server\CertificationsDumpMgt\Data\obj\Debug\net8.0\Data.GeneratedMSBuildEditorConfig.editorconfig
+F:\Work\CertificateDumps\server\CertificationsDumpMgt\Data\obj\Debug\net8.0\Data.AssemblyInfoInputs.cache
+F:\Work\CertificateDumps\server\CertificationsDumpMgt\Data\obj\Debug\net8.0\Data.AssemblyInfo.cs
+F:\Work\CertificateDumps\server\CertificationsDumpMgt\Data\obj\Debug\net8.0\Data.csproj.CoreCompileInputs.cache
+F:\Work\CertificateDumps\server\CertificationsDumpMgt\Data\obj\Debug\net8.0\Data.sourcelink.json
+F:\Work\CertificateDumps\server\CertificationsDumpMgt\Data\obj\Debug\net8.0\Data.dll
+F:\Work\CertificateDumps\server\CertificationsDumpMgt\Data\obj\Debug\net8.0\refint\Data.dll
+F:\Work\CertificateDumps\server\CertificationsDumpMgt\Data\obj\Debug\net8.0\Data.pdb
+F:\Work\CertificateDumps\server\CertificationsDumpMgt\Data\obj\Debug\net8.0\Data.genruntimeconfig.cache
+F:\Work\CertificateDumps\server\CertificationsDumpMgt\Data\obj\Debug\net8.0\ref\Data.dll
