@@ -1,9 +1,11 @@
 export interface User {
-     id: number;
-    name: string;
+    id: number;
+    userName: string;
+    userPass: string;
     email: string;
-    mobile: string;
+    mobileNo: string;
     age: number;
-    salary: number;
-    status: boolean;
+    address: string;
+    paymentCompleted: number;
+    //paymentCompleted: boolean;
 }
