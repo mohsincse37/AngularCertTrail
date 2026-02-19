@@ -6,9 +6,9 @@ namespace Service
 {
     public interface IUserTopicMappingService
     {
-        IEnumerable<UserTopicMapping> GetUserTopics();
-        void CreateUserTopicMapping(UserTopicMapping userTopicMapping);       
-        void SaveUserTopicMapping();
+        Task<IEnumerable<UserTopicMapping>> GetUserTopicsAsync();
+        Task CreateUserTopicMappingAsync(UserTopicMapping userTopicMapping);       
+        Task SaveUserTopicMappingAsync();
 
     }
     public class UserTopicMappingService : IUserTopicMappingService
@@ -24,20 +24,20 @@ namespace Service
 
         #region ICategoryService Members
 
-        public IEnumerable<UserTopicMapping> GetUserTopics()
+        public async Task<IEnumerable<UserTopicMapping>> GetUserTopicsAsync()
         {
-            return userTopicMappingRepository.GetAll();
+            return await userTopicMappingRepository.GetAllAsync();
 
         }
-        public void CreateUserTopicMapping(UserTopicMapping userTopicMapping)
+        public async Task CreateUserTopicMappingAsync(UserTopicMapping userTopicMapping)
         {
             userTopicMappingRepository.Add(userTopicMapping);
-            SaveUserTopicMapping();
+            await SaveUserTopicMappingAsync();
         }
       
-        public void SaveUserTopicMapping()
+        public async Task SaveUserTopicMappingAsync()
         {
-            unitOfWork.Commit();
+            await unitOfWork.CommitAsync();
         }
         #endregion
     }

@@ -3,6 +3,7 @@ using Data.Models;
 using Data.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CertificationsDumpMgt.Controllers
 {
@@ -18,13 +19,12 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpPost]
         [Route("LoginUser")]
-        public UserViewModel LoginUser(UserViewModel objUser)
+        public async Task<UserViewModel> LoginUser(UserViewModel objUser)
         {
             var userInfo = new List<UserViewModel>();
             string msg = "isValidLogin";
-            var user = new User() { UserPass = "12345" };
-            user = _dumpontext.Users.FirstOrDefault(u => u.Email == objUser.Email && u.UserPass == objUser.UserPass);
-            if (user == null)
+            var user = await _dumpontext.Users.FirstOrDefaultAsync(u => u.Email == objUser.Email);
+            if (user == null || !BCrypt.Net.BCrypt.Verify(objUser.UserPass, user.UserPass))
             {
                 msg = "Incorrect Email or Password";
             }

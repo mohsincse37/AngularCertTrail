@@ -1,0 +1,69 @@
+/* Login Page Styles */
+.login-page {
+  position: relative;
+}
+
+.addUser {
+  background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white to match homepage cards */
+  width: 100%;
+  max-width: 800px; /* Wider container for DumpsPractice page */
+  margin: 0 auto;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.2); /* Blue-tinted shadow to match homepage cards */
+}
+
+.addUserForm .inputGroup {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.addUserForm .inputGroup label {
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+.addUserForm .inputGroup input,
+.addUserForm .inputGroup textarea,
+.addUserForm .inputGroup select {
+  margin-top: 5px;
+  padding: 10px;
+  border: 1px solid #ced4da; /* Bootstrap's default border color */
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+}
+
+.addUserForm .inputGroup input:focus,
+.addUserForm .inputGroup textarea:focus,
+.addUserForm .inputGroup select:focus {
+  outline: none;
+  border-color: #007bff; /* Bootstrap primary blue on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.inputGroup button {
+  margin-top: 10px;
+}
+
+.login {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.login .btn.btn-success {
+  background-color: #2f7202; /* Green to match Free Dumps Practice button */
+  border-color: #2f7202;
+}
+
+.login .btn.btn-warning {
+  background-color: #d4ad00; /* Yellow to match Add to Cart button */
+  border-color: #d4ad00;
+}
+
+.addUser h3 {
+  text-align: center;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}

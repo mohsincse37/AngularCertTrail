@@ -6,12 +6,12 @@ namespace Service
 {
     public interface IQuestionOptionService
     {
-        IEnumerable<QuestionOption> GetQuestionOptions();
-        QuestionOption GetQuestionOption(int optionID);
-        void CreateQuestionOption(QuestionOption questionOption);
-        void UpdateQuestionOption(QuestionOption questionOption);
-        void DeleteQuestionOptionReferences(int optionID);
-        void SaveQuestionOption();
+        Task<IEnumerable<QuestionOption>> GetQuestionOptionsAsync();
+        Task<QuestionOption> GetQuestionOptionAsync(int optionID);
+        Task CreateQuestionOptionAsync(QuestionOption questionOption);
+        Task UpdateQuestionOptionAsync(QuestionOption questionOption);
+        Task DeleteQuestionOptionReferencesAsync(int optionID);
+        Task SaveQuestionOptionAsync();
     }
     public class QuestionOptionService : IQuestionOptionService
     {
@@ -26,35 +26,35 @@ namespace Service
 
         #region ICategoryService Members
 
-        public IEnumerable<QuestionOption> GetQuestionOptions()
+        public async Task<IEnumerable<QuestionOption>> GetQuestionOptionsAsync()
         {
-            return questionOptionRepository.GetAll();
+            return await questionOptionRepository.GetAllAsync();
 
         }
-        public QuestionOption GetQuestionOption(int optionID)
+        public async Task<QuestionOption> GetQuestionOptionAsync(int optionID)
         {
-            return questionOptionRepository.GetById(optionID);
+            return await questionOptionRepository.GetByIdAsync(optionID);
 
         }
-        public void CreateQuestionOption(QuestionOption questionOption)
+        public async Task CreateQuestionOptionAsync(QuestionOption questionOption)
         {
             questionOptionRepository.Add(questionOption);
-            SaveQuestionOption();
+            await SaveQuestionOptionAsync();
         }
-        public void UpdateQuestionOption(QuestionOption questionOption)
+        public async Task UpdateQuestionOptionAsync(QuestionOption questionOption)
         {
             questionOptionRepository.Update(questionOption);
-            SaveQuestionOption();
+            await SaveQuestionOptionAsync();
         }
-        public void DeleteQuestionOptionReferences(int optionID)
+        public async Task DeleteQuestionOptionReferencesAsync(int optionID)
         {
-            QuestionOption questionOption = questionOptionRepository.GetById(optionID);
+            QuestionOption questionOption = await questionOptionRepository.GetByIdAsync(optionID);
             questionOptionRepository.Delete(questionOption);
-            SaveQuestionOption();
+            await SaveQuestionOptionAsync();
         }
-        public void SaveQuestionOption()
+        public async Task SaveQuestionOptionAsync()
         {
-            unitOfWork.Commit();
+            await unitOfWork.CommitAsync();
         }
         #endregion
     }

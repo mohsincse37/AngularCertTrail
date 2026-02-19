@@ -2,7 +2,9 @@
 using Data.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Service;
+using System.Transactions;
 
 namespace CertificationsDumpMgt.Controllers
 {
@@ -27,7 +29,7 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpPost]
         [Route("CheckingAuthority")]
-        public AuthorityViewModel CheckingAuthority(AuthorityViewModel objAuthor)
+        public async Task<AuthorityViewModel> CheckingAuthority(AuthorityViewModel objAuthor)
         {
             objAuthor.AuthorityMsg = "";          
             string loginId = SessionHelper.getString("loginID");
@@ -36,11 +38,17 @@ namespace CertificationsDumpMgt.Controllers
                 return objAuthor;
             }
 
-            var user = _userService.GetUsers().Where(u => u.Email == loginId).FirstOrDefault();
-            var userRole = _userRoleService.GetUserRoles().Where(ur => ur.User_ID == user.ID).ToList();
-            var menu = _menuService.GetMenus().Where(m=>m.PageName == objAuthor.PageName).ToList();
-            var role = _roleService.GetRoles().ToList();
-            var roleMenu = _roleMenuService.GetRoleMenus().ToList();
+            var users = await _userService.GetUsersAsync();
+            var user = users.Where(u => u.Email == loginId).FirstOrDefault();
+            if (user == null)
+            {
+                return objAuthor;
+            }
+
+            var userRole = (await _userRoleService.GetUserRolesAsync()).Where(ur => ur.User_ID == user.ID).ToList();
+            var menu = (await _menuService.GetMenusAsync()).Where(m => m.PageName == objAuthor.PageName).ToList();
+            var role = (await _roleService.GetRolesAsync()).ToList();
+            var roleMenu = (await _roleMenuService.GetRoleMenusAsync()).ToList();
 
 
             var userMenu = new UserMenuViewModel();

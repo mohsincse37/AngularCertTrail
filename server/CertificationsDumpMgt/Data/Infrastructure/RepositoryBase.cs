@@ -60,9 +60,19 @@ namespace Data.Infrastructure
             dataContext.Database.ExecuteSqlRaw(sql);
         }
 
+        public virtual async Task ExceSqlAsync(string sql)
+        {
+            await dataContext.Database.ExecuteSqlRawAsync(sql);
+        }
+
         public virtual T GetById(int id)
         {
             return dbSet.Find(id);
+        }
+
+        public virtual async Task<T> GetByIdAsync(int id)
+        {
+            return await dbSet.FindAsync(id);
         }
 
         public virtual IEnumerable<T> GetAll()
@@ -70,14 +80,29 @@ namespace Data.Infrastructure
             return dbSet.ToList();
         }
 
+        public virtual async Task<IEnumerable<T>> GetAllAsync()
+        {
+            return await dbSet.ToListAsync();
+        }
+
         public virtual IEnumerable<T> GetMany(Expression<Func<T, bool>> where)
         {
             return dbSet.Where(where).ToList();
         }
 
+        public virtual async Task<IEnumerable<T>> GetManyAsync(Expression<Func<T, bool>> where)
+        {
+            return await dbSet.Where(where).ToListAsync();
+        }
+
         public T Get(Expression<Func<T, bool>> where)
         {
             return dbSet.Where(where).FirstOrDefault<T>();
+        }
+
+        public async Task<T> GetAsync(Expression<Func<T, bool>> where)
+        {
+            return await dbSet.Where(where).FirstOrDefaultAsync<T>();
         }
 
         #endregion

@@ -34,37 +34,40 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpGet]
         [Route("GetUsers")]
-        public List<User> GetUsers()
+        public async Task<List<User>> GetUsers()
         {
-            var userAll = new List<User>();
-            userAll = _userService.GetUsers().ToList();
-            return userAll;
+            var users = await _userService.GetUsersAsync();
+            return users.ToList();
         }
         [HttpGet]
         [Route("GetUser/{id}")]
-        public User GetUser(int id)
+        public async Task<User> GetUser(int id)
         {          
-            return _userService.GetUser(id);           
+            return await _userService.GetUserAsync(id);           
         }
 
         [HttpPost]
         [Route("AddUser")]
-        public int AddUser(User objUser)
+        public async Task<int> AddUser(User objUser)
         {
             try
             {
-                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required)) 
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, TransactionScopeAsyncFlowOption.Enabled)) 
                 {
-                    var userOld = _userService.GetUsers().FirstOrDefault(u => u.Email == objUser.Email);
+                    var users = await _userService.GetUsersAsync();
+                    var userOld = users.FirstOrDefault(u => u.Email == objUser.Email);
                     if (userOld != null) return 2;
-                    userOld = _userService.GetUsers().FirstOrDefault(u => u.MobileNo == objUser.MobileNo);
+                    userOld = users.FirstOrDefault(u => u.MobileNo == objUser.MobileNo);
                     if (userOld != null) return 3;
-                    _userService.CreateUser(objUser);
+
+                    // Hash password before storing
+                    objUser.UserPass = BCrypt.Net.BCrypt.HashPassword(objUser.UserPass);
+                    await _userService.CreateUserAsync(objUser);
 
                     var userRole = new UserRole();
                     userRole.Role_ID = 2; // common role id
                     userRole.User_ID = objUser.ID;
-                    _userRoleService.CreateUserRole(userRole);
+                    await _userRoleService.CreateUserRoleAsync(userRole);
                     scope.Complete();
                 }
             }
@@ -77,11 +80,11 @@ namespace CertificationsDumpMgt.Controllers
 
         [HttpPut]
         [Route("UpdateUser/{id}")]
-        public int UpdateUser(int id, User objUser)
+        public async Task<int> UpdateUser(int id, User objUser)
         {
             try
             {
-                _userService.UpdateUser(objUser);
+                await _userService.UpdateUserAsync(objUser);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -92,18 +95,19 @@ namespace CertificationsDumpMgt.Controllers
 
         [HttpDelete]
         [Route("DeleteUser/{id}")]
-        public int DeleteUser(int id)
+        public async Task<int> DeleteUser(int id)
         {
             try
             {
-                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required)) //transaction should be placed upon using context always
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, TransactionScopeAsyncFlowOption.Enabled)) //transaction should be placed upon using context always
                 {
-                    var userRoleList = _userRoleService.GetUserRoles().Where(a => a.User_ID == id).ToList();
+                    var userRoles = await _userRoleService.GetUserRolesAsync();
+                    var userRoleList = userRoles.Where(a => a.User_ID == id).ToList();
                     foreach (var item in userRoleList)
                     {
-                        _userRoleService.DeleteUserRole(item.ID);
+                        await _userRoleService.DeleteUserRoleAsync(item.ID);
                     }                   
-                    _userService.DeleteUserReferences(id);
+                    await _userService.DeleteUserReferencesAsync(id);
                     scope.Complete();
                 }
             }
@@ -117,21 +121,58 @@ namespace CertificationsDumpMgt.Controllers
 
         [HttpGet]
         [Route("GetUserMenus")]
-        public List<UserMenuViewModel> GetUserMenus()
+        public async Task<List<UserMenuViewModel>> GetUserMenus()
         {
             string loginId = SessionHelper.getString("loginID");
+            
+            // Fallback to JWT identity if session is empty
+            if (string.IsNullOrEmpty(loginId) || loginId == "undefined")
+            {
+                // 1. Try middleware identity
+                loginId = User.Identity?.Name 
+                          ?? User.FindFirst(System.Security.Claims.ClaimTypes.Name)?.Value 
+                          ?? User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value
+                          ?? User.FindFirst("email")?.Value
+                          ?? "";
+
+                // 2. Failsafe: Manual JWT decoding if middleware failed but header is present
+                if (string.IsNullOrEmpty(loginId))
+                {
+                    var authHeader = Request.Headers["Authorization"].ToString();
+                    if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer "))
+                    {
+                        try
+                        {
+                            var token = authHeader.Substring(7);
+                            var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+                            if (handler.CanReadToken(token))
+                            {
+                                var jwtToken = handler.ReadJwtToken(token);
+                                loginId = jwtToken.Claims.FirstOrDefault(c => c.Type == System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Email)?.Value 
+                                          ?? jwtToken.Claims.FirstOrDefault(c => c.Type == System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub)?.Value
+                                          ?? jwtToken.Claims.FirstOrDefault(c => c.Type == "email")?.Value
+                                          ?? "";
+                            }
+                        }
+                        catch { /* Silently fail and keep loginId as empty */ }
+                    }
+                }
+            }
+
             List<UserMenuViewModel> mainResult = new();
             List<UserMenuViewModel> subList = new();
             List<UserMenuViewModel> menuList = new();
             List<UserMenuViewModel> allList = new();
-            if (loginId != "" && loginId != "undefined")
+            if (!string.IsNullOrEmpty(loginId) && loginId != "undefined")
             {
                 var userMenulist = new List<UserMenuViewModel>();
-                var user = _userService.GetUsers().Where(u => u.Email == loginId).FirstOrDefault();
-                var menu = _menuService.GetMenus().ToList();
-                var role = _roleService.GetRoles().ToList();
-                var roleMenu = _roleMenuService.GetRoleMenus().ToList();
-                var userRole = _userRoleService.GetUserRoles().Where(ur => ur.User_ID == user.ID).ToList();
+                var users = await _userService.GetUsersAsync();
+                var user = users.Where(u => u.Email == loginId).FirstOrDefault();
+                var menu = (await _menuService.GetMenusAsync()).ToList();
+                var role = (await _roleService.GetRolesAsync()).ToList();
+                var roleMenu = (await _roleMenuService.GetRoleMenusAsync()).ToList();
+                var userRoles = await _userRoleService.GetUserRolesAsync();
+                var userRole = userRoles.Where(ur => ur.User_ID == user.ID).ToList();
 
                 userMenulist = (from m in menu
                                 join rm in roleMenu on m.ID equals rm.Menu_ID
@@ -190,16 +231,18 @@ namespace CertificationsDumpMgt.Controllers
         {
             try
             {
-                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, TransactionScopeAsyncFlowOption.Enabled))
                 {
                     string loginId = SessionHelper.getString("loginID");
-                    var user = _userService.GetUsers().Where(u => u.Email == loginId).FirstOrDefault();
+                    var users = await _userService.GetUsersAsync();
+                    var user = users.Where(u => u.Email == loginId).FirstOrDefault();
                     user.HasPayment = 1;
-                    _userService.UpdateUser(user);
+                    await _userService.UpdateUserAsync(user);
 
+                    var userTopics = await _userTopicMappingService.GetUserTopicsAsync();
                     foreach (var item in arrayList)
                     {
-                        var userTopicMappingOld = _userTopicMappingService.GetUserTopics().Where(a => a.UserID == loginId && a.TopicID == item.TopicID && a.ToDate >= DateTime.Today).FirstOrDefault();
+                        var userTopicMappingOld = userTopics.Where(a => a.UserID == loginId && a.TopicID == item.TopicID && a.ToDate >= DateTime.Today).FirstOrDefault();
                         if (userTopicMappingOld == null)
                         {
                             var userTopicMapping = new UserTopicMapping();
@@ -209,12 +252,12 @@ namespace CertificationsDumpMgt.Controllers
                             userTopicMapping.ToDate = DateTime.Today.AddMonths(item.AccessDuration);
                             userTopicMapping.Amount = item.Amount;
                             userTopicMapping.EntryDate = DateTime.Now;
-                            _userTopicMappingService.CreateUserTopicMapping(userTopicMapping);
+                            await _userTopicMappingService.CreateUserTopicMappingAsync(userTopicMapping);
                         }
                     }
                     for (global::System.Int32 i = 0; i < 2; i++)
                     {
-                         SendMail(user.Email,user.UserName,i);
+                        await SendMail(user.Email,user.UserName,i);
                     }
                   
                     scope.Complete();
@@ -269,15 +312,18 @@ namespace CertificationsDumpMgt.Controllers
 
         [HttpPut]
         [Route("ChangePassword/{id}")]
-        public int ChangePassword(int id, UserViewModel userInfo)
+        public async Task<int> ChangePassword(int id, UserViewModel userInfo)
         {
             try
             {
-                var oldUser = _userService.GetUsers().SingleOrDefault(q => q.Email == userInfo.Email);
-                if (oldUser.UserPass != userInfo.OldPassword) return 1;
+                var users = await _userService.GetUsersAsync();
+                var oldUser = users.SingleOrDefault(q => q.Email == userInfo.Email);
+                // Verify old password against stored hash
+                if (!BCrypt.Net.BCrypt.Verify(userInfo.OldPassword, oldUser.UserPass)) return 1;
 
-                oldUser.UserPass = userInfo.ConfirmPassword;
-                _userService.UpdateUser(oldUser);
+                // Hash new password before storing
+                oldUser.UserPass = BCrypt.Net.BCrypt.HashPassword(userInfo.ConfirmPassword);
+                await _userService.UpdateUserAsync(oldUser);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -287,11 +333,13 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpGet]
         [Route("GetUserWiseSubscriptionList/{topicID}")]
-        public List<UserTopicMappingViewModel> GetUserWiseSubscriptionList(int topicID)
+        public async Task<List<UserTopicMappingViewModel>> GetUserWiseSubscriptionList(int topicID)
         {
             var userWiseTopicList = new List<UserTopicMappingViewModel>();
-            var topicList = _topicService.GetTopics().Where(t => t.ID == topicID).ToList();
-            var userTopicList = _userTopicMappingService.GetUserTopics().Where(ut => ut.TopicID == topicID).ToList();
+            var topics = await _topicService.GetTopicsAsync();
+            var topicList = topics.Where(t => t.ID == topicID).ToList();
+            var userTopics = await _userTopicMappingService.GetUserTopicsAsync();
+            var userTopicList = userTopics.Where(ut => ut.TopicID == topicID).ToList();
 
             userWiseTopicList = (from t in topicList
                                  join ut in userTopicList on t.ID equals ut.TopicID

@@ -6,11 +6,11 @@ namespace Service
 {
     public interface IQuestionCorrectOptionsService
     {
-        IEnumerable<QuestionCorrectOptionMapping> GetQuestionCorrectOptions();
-        QuestionCorrectOptionMapping GetQuestionCorrectOption(int optionID);
-        void CreateQuestionCorrectOptions(QuestionCorrectOptionMapping questionCorrectOptions);
+        Task<IEnumerable<QuestionCorrectOptionMapping>> GetQuestionCorrectOptionsAsync();
+        Task<QuestionCorrectOptionMapping> GetQuestionCorrectOptionAsync(int optionID);
+        Task CreateQuestionCorrectOptionsAsync(QuestionCorrectOptionMapping questionCorrectOptions);
        
-        void SaveQuestionCorrectOptions();
+        Task SaveQuestionCorrectOptionsAsync();
     }
     public class QuestionCorrectOptionsService : IQuestionCorrectOptionsService
     {
@@ -25,23 +25,23 @@ namespace Service
 
         #region ICategoryService Members
 
-        public IEnumerable<QuestionCorrectOptionMapping> GetQuestionCorrectOptions()
+        public async Task<IEnumerable<QuestionCorrectOptionMapping>> GetQuestionCorrectOptionsAsync()
         {
-            return questionCorrOptionsRepository.GetAll();
+            return await questionCorrOptionsRepository.GetAllAsync();
         }
-        public QuestionCorrectOptionMapping GetQuestionCorrectOption(int optionID)
+        public async Task<QuestionCorrectOptionMapping> GetQuestionCorrectOptionAsync(int optionID)
         {
-            return questionCorrOptionsRepository.GetById(optionID);
+            return await questionCorrOptionsRepository.GetByIdAsync(optionID);
 
         }
-        public void CreateQuestionCorrectOptions(QuestionCorrectOptionMapping questionCorrectOptions)
+        public async Task CreateQuestionCorrectOptionsAsync(QuestionCorrectOptionMapping questionCorrectOptions)
         {
             questionCorrOptionsRepository.Add(questionCorrectOptions);
-            SaveQuestionCorrectOptions();
+            await SaveQuestionCorrectOptionsAsync();
         }       
-        public void SaveQuestionCorrectOptions()
+        public async Task SaveQuestionCorrectOptionsAsync()
         {
-            unitOfWork.Commit();
+            await unitOfWork.CommitAsync();
         }
 
         #endregion

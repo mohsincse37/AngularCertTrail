@@ -6,12 +6,12 @@ namespace Service
 {
     public interface IQuestionService
     {
-        IEnumerable<CertificationQuestion> GetQuestions();
-        CertificationQuestion GetCertificationQuestion(int questionID);
-        void CreateQuestion(CertificationQuestion certificationQuestion);
-        void UpdateQuestion(CertificationQuestion certificationQuestion);
-        void DeleteQuestionReferences(int questionID);
-        void SaveQuestion();
+        Task<IEnumerable<CertificationQuestion>> GetQuestionsAsync();
+        Task<CertificationQuestion> GetCertificationQuestionAsync(int questionID);
+        Task CreateQuestionAsync(CertificationQuestion certificationQuestion);
+        Task UpdateQuestionAsync(CertificationQuestion certificationQuestion);
+        Task DeleteQuestionReferencesAsync(int questionID);
+        Task SaveQuestionAsync();
     }
     public class QuestionService : IQuestionService
     {
@@ -26,35 +26,35 @@ namespace Service
 
         #region ICategoryService Members
 
-        public IEnumerable<CertificationQuestion> GetQuestions()
+        public async Task<IEnumerable<CertificationQuestion>> GetQuestionsAsync()
         {
-            return questionRepository.GetAll();
+            return await questionRepository.GetAllAsync();
 
         }
-        public CertificationQuestion GetCertificationQuestion(int questionID)
+        public async Task<CertificationQuestion> GetCertificationQuestionAsync(int questionID)
         {
-            return questionRepository.GetById(questionID);
+            return await questionRepository.GetByIdAsync(questionID);
 
         }
-        public void CreateQuestion(CertificationQuestion certificationQuestion)
+        public async Task CreateQuestionAsync(CertificationQuestion certificationQuestion)
         {
             questionRepository.Add(certificationQuestion);
-            SaveQuestion();
+            await SaveQuestionAsync();
         }
-        public void UpdateQuestion(CertificationQuestion certificationQuestion)
+        public async Task UpdateQuestionAsync(CertificationQuestion certificationQuestion)
         {
             questionRepository.Update(certificationQuestion);
-            SaveQuestion();
+            await SaveQuestionAsync();
         }
-        public void DeleteQuestionReferences(int questionID)
+        public async Task DeleteQuestionReferencesAsync(int questionID)
         {
-            CertificationQuestion question = questionRepository.GetById(questionID);
+            CertificationQuestion question = await questionRepository.GetByIdAsync(questionID);
             questionRepository.Delete(question);
-            SaveQuestion();
+            await SaveQuestionAsync();
         }
-        public void SaveQuestion()
+        public async Task SaveQuestionAsync()
         {
-            unitOfWork.Commit();
+            await unitOfWork.CommitAsync();
         }
 
         #endregion

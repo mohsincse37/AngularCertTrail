@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CertificationsDumpMgt")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f2cf22db2c0845c702b25354c8b72aaed89d7dba")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aa44cce5e81f9ccb744c860e97fbaa71dad4053a")]
 [assembly: System.Reflection.AssemblyProductAttribute("CertificationsDumpMgt")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CertificationsDumpMgt")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -6,12 +6,12 @@ namespace Service
 {
     public interface IUserService
     {
-        IEnumerable<User> GetUsers();
-        User GetUser(int userID);
-        void CreateUser(User user);
-        void UpdateUser(User user);
-        void DeleteUserReferences(int userID);
-        void SaveUser();
+        Task<IEnumerable<User>> GetUsersAsync();
+        Task<User> GetUserAsync(int userID);
+        Task CreateUserAsync(User user);
+        Task UpdateUserAsync(User user);
+        Task DeleteUserReferencesAsync(int userID);
+        Task SaveUserAsync();
     }
     public class UserService : IUserService
     {
@@ -26,35 +26,35 @@ namespace Service
 
         #region ICategoryService Members
 
-        public IEnumerable<User> GetUsers()
+        public async Task<IEnumerable<User>> GetUsersAsync()
         {
-            return userRepository.GetAll();
+            return await userRepository.GetAllAsync();
 
         }
-        public User GetUser(int userID)
+        public async Task<User> GetUserAsync(int userID)
         {
-            return userRepository.GetById(userID);
+            return await userRepository.GetByIdAsync(userID);
 
         }
-        public void CreateUser(User user)
+        public async Task CreateUserAsync(User user)
         {
             userRepository.Add(user);
-            SaveUser();
+            await SaveUserAsync();
         }
-        public void UpdateUser(User user)
+        public async Task UpdateUserAsync(User user)
         {
             userRepository.Update(user);
-            SaveUser();
+            await SaveUserAsync();
         }
-        public void DeleteUserReferences(int userID)
+        public async Task DeleteUserReferencesAsync(int userID)
         {
-            User user = userRepository.GetById(userID);
+            User user = await userRepository.GetByIdAsync(userID);
             userRepository.Delete(user);
-            SaveUser();
+            await SaveUserAsync();
         }
-        public void SaveUser()
+        public async Task SaveUserAsync()
         {
-            unitOfWork.Commit();
+            await unitOfWork.CommitAsync();
         }
         #endregion
     }

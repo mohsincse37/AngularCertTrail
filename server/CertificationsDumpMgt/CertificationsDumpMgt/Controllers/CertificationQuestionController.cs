@@ -31,21 +31,27 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpGet]
         [Route("GetCertificationQuestion")]
-        public List<QuestionViewModel> GetCertificationQuestions()
+        public async Task<List<QuestionViewModel>> GetCertificationQuestions()
         {
             var questionAll = new List<QuestionViewModel>();
-            var questionList = _questionService.GetQuestions().ToList();
-            var topicList = _topicService.GetTopics().ToList();
+            var questionList = (await _questionService.GetQuestionsAsync()).ToList();
+            var topicList = (await _topicService.GetTopicsAsync()).ToList();
+            var corrOptionAllList = (await _qCorrOptionService.GetQuestionCorrectOptionsAsync()).ToList();
+            var questionOptionAllList = (await _questionOptionService.GetQuestionOptionsAsync()).ToList();
  
            
             for (int i = 0; i < questionList.Count; i++)
             {
                 string optionAll = string.Empty;
-                var corrOptionList = _qCorrOptionService.GetQuestionCorrectOptions().Where(a=>a.QuestionID == questionList[i].ID).OrderBy(a=>a.CorrectionOptionID).ToList();
+                var currentQuestionID = questionList[i].ID;
+                var corrOptionList = corrOptionAllList.Where(a => a.QuestionID == currentQuestionID).OrderBy(a => a.CorrectionOptionID).ToList();
                 for (int j = 0; j < corrOptionList.Count; j++)
                 {
-                    var questionOption = _questionOptionService.GetQuestionOption(corrOptionList[j].CorrectionOptionID);
-                    optionAll += questionOption.OptionTitle + ",";                
+                    var questionOption = questionOptionAllList.FirstOrDefault(o => o.ID == corrOptionList[j].CorrectionOptionID);
+                    if (questionOption != null)
+                    {
+                        optionAll += questionOption.OptionTitle + ",";
+                    }
                 }
                 optionAll = optionAll.TrimEnd(',');
             
@@ -80,31 +86,33 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpGet]
         [Route("GetQuestionDataByTopicID/{topicID}")]
-        public List<CertificationQuestion> GetQuestionDataByTopicID(int topicID)
+        public async Task<List<CertificationQuestion>> GetQuestionDataByTopicID(int topicID)
         {            
-            var questionAll = _questionService.GetQuestions().Where(q => q.TopicID == topicID).OrderBy(o => o.ID).ToList();
+            var questions = await _questionService.GetQuestionsAsync();
+            var questionAll = questions.Where(q => q.TopicID == topicID).OrderBy(o => o.ID).ToList();
             return questionAll;            
         }
         [HttpGet]
         [Route("GetCertificationQuestion/{id}")]
-        public CertificationQuestion GetCertificationQuestion(int id)
+        public async Task<CertificationQuestion> GetCertificationQuestion(int id)
         {            
-            var question = _questionService.GetCertificationQuestion(id);
+            var question = await _questionService.GetCertificationQuestionAsync(id);
             return question;
         }
 
         [HttpPost]
         [Route("AddCertificationQuestion")]
-        public int AddCertificationQuestion([FromForm] QuestionViewModel objQuestionViewModel)
+        public async Task<int> AddCertificationQuestion([FromForm] QuestionViewModel objQuestionViewModel)
         {
             try
             {
                 var question = new CertificationQuestion();
-                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required)) //transaction should be placed upon using context always
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, TransactionScopeAsyncFlowOption.Enabled)) //transaction should be placed upon using context always
                 {
                     if (objQuestionViewModel.file != null)
                     {
-                        int maxQID = GetCertificationQuestions().Max(q => q.ID);
+                        var questions = await GetCertificationQuestions();
+                        int maxQID = questions.Max(q => q.ID);
                         maxQID = maxQID + 1;
 
                         var fName = maxQID.ToString();
@@ -123,7 +131,7 @@ namespace CertificationsDumpMgt.Controllers
                     question.OptionType = objQuestionViewModel.OptionType;
 
                     question.EntryDate = DateTime.Now;
-                    _questionService.CreateQuestion(question);
+                    await _questionService.CreateQuestionAsync(question);
                     scope.Complete();
                 }
             }
@@ -137,11 +145,11 @@ namespace CertificationsDumpMgt.Controllers
        
         [HttpPut]
         [Route("UpdateCertificationQuestion/{id}")]
-        public int UpdateCertificationQuestion(int id, [FromForm] QuestionViewModel objQuestionViewModel)
+        public async Task<int> UpdateCertificationQuestion(int id, [FromForm] QuestionViewModel objQuestionViewModel)
         {            
             try
             {
-                var questionInfo = _questionService.GetCertificationQuestion(id);
+                var questionInfo = await _questionService.GetCertificationQuestionAsync(id);
                 
                 if (objQuestionViewModel.file != null)
                 {
@@ -166,7 +174,7 @@ namespace CertificationsDumpMgt.Controllers
                 questionInfo.OptionType = objQuestionViewModel.OptionType;
                 if (questionInfo.OptionType == null) questionInfo.OptionType = 1;
 
-                _questionService.UpdateQuestion(questionInfo);
+                await _questionService.UpdateQuestionAsync(questionInfo);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -177,16 +185,16 @@ namespace CertificationsDumpMgt.Controllers
 
         [HttpDelete]
         [Route("DeleteCertificationQuestion/{id}")]
-        public int DeleteCertificationQuestion(int id)
+        public async Task<int> DeleteCertificationQuestion(int id)
         {
             try
             {
-                var questionInfo = _questionService.GetCertificationQuestion(id);
+                var questionInfo = await _questionService.GetCertificationQuestionAsync(id);
                 if (System.IO.File.Exists(questionInfo.QuestionImgPath))
                 {
                     System.IO.File.Delete(questionInfo.QuestionImgPath);
                 }
-                _questionService.DeleteQuestionReferences(id);
+                await _questionService.DeleteQuestionReferencesAsync(id);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -197,9 +205,10 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpGet]
         [Route("GetMaxQuestionNo/{topicID}")]
-        public CertificationQuestion GetMaxQuestionNo(int topicID)
+        public async Task<CertificationQuestion> GetMaxQuestionNo(int topicID)
         {
-            var question = _questionService.GetQuestions().Where(q => q.TopicID == topicID).OrderByDescending(q=>q.QuestionNo).FirstOrDefault();
+            var questions = await _questionService.GetQuestionsAsync();
+            var question = questions.Where(q => q.TopicID == topicID).OrderByDescending(q=>q.QuestionNo).FirstOrDefault();
             return question;
         }
     }

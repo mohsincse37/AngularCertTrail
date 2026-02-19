@@ -27,5 +27,10 @@ namespace Data.Infrastructure
         {
             DbContext.Commit();
         }
+
+        public async Task CommitAsync()
+        {
+            await DbContext.CommitAsync();
+        }
     }
 }

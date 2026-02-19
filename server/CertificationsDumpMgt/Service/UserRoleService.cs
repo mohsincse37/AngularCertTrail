@@ -6,10 +6,10 @@ namespace Service
 {
     public interface IUserRoleService
     {
-        IEnumerable<UserRole> GetUserRoles();
-        void CreateUserRole(UserRole userRole);
-        void DeleteUserRole(int userRoleID);
-        void SaveUserRole();
+        Task<IEnumerable<UserRole>> GetUserRolesAsync();
+        Task CreateUserRoleAsync(UserRole userRole);
+        Task DeleteUserRoleAsync(int userRoleID);
+        Task SaveUserRoleAsync();
 
     }
     public class UserRoleService : IUserRoleService
@@ -25,25 +25,25 @@ namespace Service
 
         #region ICategoryService Members
 
-        public IEnumerable<UserRole> GetUserRoles()
+        public async Task<IEnumerable<UserRole>> GetUserRolesAsync()
         {
-            return userRoleRepository.GetAll();
+            return await userRoleRepository.GetAllAsync();
 
         }
-        public void CreateUserRole(UserRole userRole)
+        public async Task CreateUserRoleAsync(UserRole userRole)
         {
             userRoleRepository.Add(userRole);
-            SaveUserRole();
+            await SaveUserRoleAsync();
         }
-        public void DeleteUserRole(int userRoleID)
+        public async Task DeleteUserRoleAsync(int userRoleID)
         {
-            UserRole userRole = userRoleRepository.GetById(userRoleID);
+            UserRole userRole = await userRoleRepository.GetByIdAsync(userRoleID);
             userRoleRepository.Delete(userRole);
-            SaveUserRole();
+            await SaveUserRoleAsync();
         }
-        public void SaveUserRole()
+        public async Task SaveUserRoleAsync()
         {
-            unitOfWork.Commit();
+            await unitOfWork.CommitAsync();
         }
         #endregion
     }

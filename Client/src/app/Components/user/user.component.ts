@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './user.component.css',
 })
 export class UserComponent implements OnInit {
-@ViewChild('myModal') model: ElementRef | undefined;
+  @ViewChild('myModal') model: ElementRef | undefined;
   userList: User[] = [];
   userService = inject(UserService);
   userForm: FormGroup = new FormGroup({});
@@ -38,8 +38,7 @@ export class UserComponent implements OnInit {
 
   }
   getUsers() {
-    this.userService.getAllUsers().subscribe((res) => {
-
+    this.userService.getUsers().subscribe((res) => {
       this.userList = res;
     })
   }
@@ -47,12 +46,13 @@ export class UserComponent implements OnInit {
     this.userForm = this.fb.group({
 
       id: [0],
-      name: ['', [Validators.required]],
+      userName: ['', [Validators.required]],
+      userPass: ['', [Validators.required]],
       email: ['', [Validators.required]],
-      mobile: ['', [Validators.required]],
+      mobileNo: ['', [Validators.required]],
       age: ['', [Validators.required]],
-      salary: ['', [Validators.required]],
-      status: [false, [Validators.required]]
+      address: ['', [Validators.required]],
+      hasPayment: [false]
 
     });
   }
@@ -63,8 +63,11 @@ export class UserComponent implements OnInit {
       alert('Please Fill All Fields');
       return;
     }
+
+    // Convert boolean hasPayment to number for API
+    this.formValues = { ...this.userForm.value, hasPayment: this.userForm.value.hasPayment ? 1 : 0 };
+
     if (this.userForm.value.id == 0) {
-      this.formValues = this.userForm.value;
       this.userService.addUser(this.formValues).subscribe((res) => {
 
         alert('User Added Successfully');
@@ -74,9 +77,7 @@ export class UserComponent implements OnInit {
 
       });
     } else {
-      this.formValues = this.userForm.value;
-      this.userService.updateUser(this.formValues).subscribe((res) => {
-
+      this.userService.updateUser(this.formValues.id, this.formValues).subscribe((res) => {
         alert('User Updated Successfully');
         this.getUsers();
         this.userForm.reset();
@@ -90,10 +91,12 @@ export class UserComponent implements OnInit {
 
   OnEdit(User: User) {
     this.openModal();
-    this.userForm.patchValue(User);
+    // Convert number hasPayment back to boolean for checkbox
+    const patchValue = { ...User, hasPayment: User.hasPayment === 1 };
+    this.userForm.patchValue(patchValue);
   }
   onDelete(user: User) {
-    const isConfirm = confirm("Are you sure you want to delete this User " + user.name);
+    const isConfirm = confirm("Are you sure you want to delete this User " + user.userName);
     if (isConfirm) {
       this.userService.deleteUser(user.id).subscribe((res) => {
         alert("User Deleted Successfully");

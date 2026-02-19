@@ -1,0 +1,446 @@
+/* ========================
+Certification Section Styles 
+=========================*/
+.certification-section {
+  padding: 20px;
+}
+
+/* Card Styles */
+.certification-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s ease;
+  height: 100%;
+  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0;
+  background: #f0f0f0;
+}
+
+.certification-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.certification-img {
+  width: 150px;
+  height: auto;
+  margin: 20px auto;
+}
+
+.certification-card .card-body {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.certification-card .card-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.certification-card .card-text {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.certification-card .card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.certification-card .card-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.certification-card .card-link:hover {
+  text-decoration: underline;
+}
+
+/* =======================
+General Styles 
+======================= */
+.form-Control-search {
+  border: 1px solid black !important;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--bs-body-color);
+  appearance: none;
+  background-color: var(--bs-body-bg);
+  background-clip: padding-box;
+  border-radius: var(--bs-border-radius);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn-outline-success-search {
+  color: #fff;
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+  width: 80px;
+  height: 35px;
+  padding-bottom: 2rem;
+}
+
+.buttonCenter {
+  text-align: center;
+}
+
+.questionSpace {
+  margin-top: 0.8rem;
+}
+
+.imgSize {
+  height: 70px;
+  width: 70px;
+}
+
+.shoppingCart-position {
+  position: relative; /* Changed from absolute to relative to stay in document flow */
+  display: inline-block; /* Ensure it respects parent alignment */
+  margin-right: 1rem; /* Reduced margin for better alignment; adjust as needed */
+}
+
+.accImg {
+  height: 50px;
+  width: 50px;
+}
+
+.cartImg {
+  height: 30px;
+  width: 30px;
+}
+
+.notiCount {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  /* right: 1.3rem; */
+  top: 0.2rem;
+  border-radius: 50%;
+  background: var(--primary-color);
+  box-sizing: border-box;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.dropdown-toggle::after {
+  color: var(--primary-color);
+}
+
+.delIconStyle {
+  font-size: 10px;
+}
+
+.cartTblStyle {
+  background-color: rgba(255, 255, 255, 0.95);
+  margin: 0 auto;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.2);
+  margin-top: 60px;
+  position: absolute;
+  right: 0px;
+}
+
+.cartUserInfo {
+  padding-top: 1rem;
+  font-weight: bold;
+  color: blueviolet;
+}
+
+.cartSpanUInfo {
+  color: rgb(172, 119, 22);
+}
+
+.addCart {
+  position: relative;
+}
+
+.addCart a {
+  right: -15px;
+  top: -3px;
+}
+
+.addCart img {
+  position: absolute;
+  right: 0;
+}
+
+.freeDumpsColor {
+  color: #e31e89 !important;
+}
+
+/* =======================
+Styles for UserSubscription page 
+======================= */
+.tablePosition {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #dee2e6;
+}
+
+.tablePosition .table {
+  margin-bottom: 0;
+  border-collapse: collapse;
+}
+
+.tablePosition .table th,
+.tablePosition .table td {
+  vertical-align: middle;
+  color: #333;
+  border: 1px solid #dee2e6;
+  padding: 8px;
+}
+
+.tablePosition .table thead th {
+  background-color: #f5f5f5;
+  color: #333;
+  border-color: #dee2e6;
+}
+
+.tablePosition .table tbody tr {
+  background-color: #fff;
+}
+
+.tablePosition .table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.tablePosition .btn-success {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  padding: 5px 10px;
+}
+
+.tablePosition .btn-success:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.tablePosition .btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  padding: 5px 10px;
+}
+
+.tablePosition .btn-danger:hover {
+  background-color: #c82333;
+  border-color: #c82333;
+}
+
+.tablePosition .pagination {
+  justify-content: right;
+  margin-top: 20px;
+}
+
+.tablePosition .pagination .page-link {
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 3px;
+  margin: 0 2px;
+}
+
+.tablePosition .pagination .page-item.active .page-link {
+  background-color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  color: #fff;
+}
+
+.tablePosition .pagination .page-link:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.tablePosition .sizePerPage {
+  margin-right: 10px;
+}
+
+.tablePosition #pageDropDown {
+  border: 1px solid #dee2e6 !important;
+  border-radius: 3px !important;
+  padding: 6px 12px !important;
+  background-color: #fff !important;
+  color: #333 !important;
+  margin-top: 20px;
+}
+
+.search-bar {
+  border: 1px solid #dee2e6 !important;
+  border-radius: 3px !important;
+  padding: 6px 12px !important;
+  background-color: #fff !important;
+  color: #333 !important;
+}
+
+.search-bar:focus {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3) !important;
+}
+
+.react-bs-table-sizePerPage-dropdown ul li a {
+  color: #333 !important;
+  text-decoration: none !important;
+}
+
+.react-bs-table-sizePerPage-dropdown ul li:hover {
+  background-color: var(--primary-color);
+}
+
+.react-bs-table-sizePerPage-dropdown ul li:hover a {
+  color: #fff !important;
+}
+
+/* =======================
+Navigation Styles 
+======================= */
+/* .nav-link {
+  color: var(--bs-body-color) !important;
+  font-weight: 500 !important;
+  transition: color 0.2s ease-in-out !important;
+}
+
+.nav-link:hover,
+.nav-link.active,
+.nav-link.dropdown-toggle.active {
+  color: var(--primary-color) !important;
+}
+
+.nav-link.dropdown-toggle {
+  color: var(--bs-body-color) !important;
+  font-weight: 500 !important;
+}
+
+.dropdown-menu {
+  background-color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.dropdown-item {
+  color: #4b5563 !important;
+  font-size: 0.9rem !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  color: var(--white-color) !important;
+  background-color: var(--primary-color) !important;
+}
+
+.account-position .nav-link.dropdown-toggle {
+  padding: 0 !important;
+}
+
+.account-position .dropdown-menu {
+  right: 0 !important;
+  left: auto !important;
+}
+
+.account-position .navbar-nav {
+  margin-bottom: 0 !important;
+} */
+
+/* =======================
+Media Queries 
+======================= */
+@media (max-width: 991px) {
+  #navbarNavDropdown .nav {
+    display: block;
+  }
+
+  .shoppingCart-position {
+    margin-right: 2rem;
+  }
+}
+
+
+.navbar-nav .dropdown-menu.dropdown-menu-end{
+  right: 0px;
+}
+/* Nested dropdown styles */
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  /* margin-top: -1px; */
+  display: none;
+}
+
+/* Show nested dropdown on hover for desktop */
+@media (min-width: 992px) {
+  .dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+  }
+}
+
+/* Keep parent dropdown open on hover */
+@media (min-width: 992px) {
+  .nav-item.dropdown:hover > .dropdown-menu {
+    display: block;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 991.98px) {
+  .dropdown-submenu .dropdown-menu {
+    position: static;
+    margin-left: 20px;
+    border: none;
+    box-shadow: none;
+  }
+
+  /* Show nested dropdown when parent is active on mobile */
+  .dropdown-submenu .dropdown-toggle[aria-expanded="true"] + .dropdown-menu {
+    display: block;
+  }
+}
+
+/* Dropdown item styling */
+.dropdown-item {
+  font-size: 14px;
+  padding: 8px 20px;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}
+
+/* Cart styles */
+.imgSize {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+}
+
+.notiCount {
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.cartTblStyle {
+  font-size: 0.875rem;
+}
+
+.delIconStyle {
+  padding: 0.25rem;
+}

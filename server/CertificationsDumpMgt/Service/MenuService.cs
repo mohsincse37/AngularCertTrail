@@ -6,7 +6,7 @@ namespace Service
 {
     public interface IMenuService
     {
-        IEnumerable<Menu> GetMenus();
+        Task<IEnumerable<Menu>> GetMenusAsync();
        
     }
     public class MenuService : IMenuService
@@ -22,9 +22,9 @@ namespace Service
 
         #region ICategoryService Members
 
-        public IEnumerable<Menu> GetMenus()
+        public async Task<IEnumerable<Menu>> GetMenusAsync()
         {
-            return menuRepository.GetAll();
+            return await menuRepository.GetAllAsync();
 
         }
         

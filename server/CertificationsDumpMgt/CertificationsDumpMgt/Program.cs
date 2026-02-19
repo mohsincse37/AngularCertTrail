@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Data;
 using Service;
@@ -5,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Data.Repositories;
 using Data.Infrastructure;
 using Data.ViewModels;
-
+using System.Security.Claims;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IDbFactory, DbFactory>();
@@ -32,14 +35,47 @@ builder.Services.AddScoped<IUserRoleService, UserRoleService>();
 builder.Services.AddScoped<IUserTopicMappingRepository, UserTopicMappingRepository>();
 builder.Services.AddScoped<IUserTopicMappingService, UserTopicMappingService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
-// Add services to the container.
 builder.Services.AddDbContext<CerDumpMgtContext>(options =>
    options.UseSqlServer(builder.Configuration.GetConnectionString("CRUDCS")));
 
-builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<CerDumpMgtContext>();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<CerDumpMgtContext>();
+
+// JWT Configuration
+var keyString = builder.Configuration["JwtConfig:Secret"] ?? "DefaultForDevelopmentOnly_MustBeLongerThan32Chars";
+var key = Encoding.ASCII.GetBytes(keyString);
+
+var tokenValidationParameters = new TokenValidationParameters
+{
+    ValidateIssuerSigningKey = true,
+    IssuerSigningKey = new SymmetricSecurityKey(key),
+    ValidateIssuer = true,
+    ValidateAudience = true,
+    ValidateLifetime = true,
+    RequireExpirationTime = true,
+    ValidIssuer = builder.Configuration["JwtConfig:Issuer"] ?? "AngularCertTrail",
+    ValidAudience = builder.Configuration["JwtConfig:Audience"] ?? "AngularCertTrailUser",
+    ClockSkew = TimeSpan.Zero,
+    NameClaimType = ClaimTypes.Name,
+    RoleClaimType = ClaimTypes.Role
+};
+
+builder.Services.AddSingleton(tokenValidationParameters);
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(jwt =>
+{
+    jwt.SaveToken = true;
+    jwt.TokenValidationParameters = tokenValidationParameters;
+});
 
 builder.Services.AddControllers();
 
@@ -67,19 +103,24 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    app.UseHttpsRedirection();
+}
 app.UseStaticFiles();
+
+app.UseRouting();
+
 app.UseCors(builder =>
 {
     builder
-    .AllowAnyOrigin()
+    .WithOrigins("http://localhost:4200")
     .AllowAnyMethod()
-    .AllowAnyHeader();       
-    
+    .AllowAnyHeader()
+    .AllowCredentials();       
 });
 
-
-app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

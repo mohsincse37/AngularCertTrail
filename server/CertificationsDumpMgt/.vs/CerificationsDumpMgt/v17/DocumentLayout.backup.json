@@ -1,10 +1,26 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\",
+  "WorkspaceRootPath": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A5C3BEDC-A5EB-4CA4-883A-30D52E5C5139}|CertificationsDumpMgt\\CertificationsDumpMgt.csproj|f:\\work\\certificatedumps\\server\\certificationsdumpmgt\\certificationsdumpmgt\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A5C3BEDC-A5EB-4CA4-883A-30D52E5C5139}|CertificationsDumpMgt\\CertificationsDumpMgt.csproj|f:\\work\\angularcerttrail\\server\\certificationsdumpmgt\\certificationsdumpmgt\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A5C3BEDC-A5EB-4CA4-883A-30D52E5C5139}|CertificationsDumpMgt\\CertificationsDumpMgt.csproj|solutionrelative:certificationsdumpmgt\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5C3BEDC-A5EB-4CA4-883A-30D52E5C5139}|CertificationsDumpMgt\\CertificationsDumpMgt.csproj|f:\\work\\angularcerttrail\\server\\certificationsdumpmgt\\certificationsdumpmgt\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5C3BEDC-A5EB-4CA4-883A-30D52E5C5139}|CertificationsDumpMgt\\CertificationsDumpMgt.csproj|solutionrelative:certificationsdumpmgt\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5C3BEDC-A5EB-4CA4-883A-30D52E5C5139}|CertificationsDumpMgt\\CertificationsDumpMgt.csproj|f:\\work\\angularcerttrail\\server\\certificationsdumpmgt\\certificationsdumpmgt\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5C3BEDC-A5EB-4CA4-883A-30D52E5C5139}|CertificationsDumpMgt\\CertificationsDumpMgt.csproj|solutionrelative:certificationsdumpmgt\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CB813C83-1EDB-41E5-899D-E8F850375927}|Service\\Service.csproj|f:\\work\\angularcerttrail\\server\\certificationsdumpmgt\\service\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CB813C83-1EDB-41E5-899D-E8F850375927}|Service\\Service.csproj|solutionrelative:service\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5C3BEDC-A5EB-4CA4-883A-30D52E5C5139}|CertificationsDumpMgt\\CertificationsDumpMgt.csproj|f:\\work\\angularcerttrail\\server\\certificationsdumpmgt\\certificationsdumpmgt\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5C3BEDC-A5EB-4CA4-883A-30D52E5C5139}|CertificationsDumpMgt\\CertificationsDumpMgt.csproj|solutionrelative:certificationsdumpmgt\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,17 +30,69 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\Program.cs",
+              "RelativeDocumentMoniker": "CertificationsDumpMgt\\Program.cs",
+              "ToolTip": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\Program.cs",
+              "RelativeToolTip": "CertificationsDumpMgt\\Program.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAAD0AAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-19T06:58:13.873Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "CertificationsDumpMgt\\Controllers\\AuthController.cs",
+              "ToolTip": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "CertificationsDumpMgt\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-19T05:27:09.023Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Service\\AuthService.cs",
+              "RelativeDocumentMoniker": "Service\\AuthService.cs",
+              "ToolTip": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Service\\AuthService.cs",
+              "RelativeToolTip": "Service\\AuthService.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAIA0wEEAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-19T05:26:46.546Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LoginController.cs",
+              "DocumentMoniker": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\Controllers\\LoginController.cs",
+              "RelativeDocumentMoniker": "CertificationsDumpMgt\\Controllers\\LoginController.cs",
+              "ToolTip": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\Controllers\\LoginController.cs",
+              "RelativeToolTip": "CertificationsDumpMgt\\Controllers\\LoginController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-19T05:26:30.558Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "UserController.cs",
-              "DocumentMoniker": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\Controllers\\UserController.cs",
+              "DocumentMoniker": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "CertificationsDumpMgt\\Controllers\\UserController.cs",
-              "ToolTip": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\Controllers\\UserController.cs",
+              "ToolTip": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\Controllers\\UserController.cs",
               "RelativeToolTip": "CertificationsDumpMgt\\Controllers\\UserController.cs",
-              "ViewState": "AgIAANIAAAAAAAAAAAAAwOYAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAACABAAAAAAAAAAAowHwAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-13T06:32:54.154Z",
               "EditorCaption": ""

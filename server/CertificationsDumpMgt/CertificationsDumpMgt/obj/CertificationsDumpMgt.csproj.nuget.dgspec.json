@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\CertificationsDumpMgt.csproj": {}
+    "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\CertificationsDumpMgt.csproj": {}
   },
   "projects": {
-    "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\CertificationsDumpMgt.csproj": {
+    "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\CertificationsDumpMgt.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\CertificationsDumpMgt.csproj",
+        "projectUniqueName": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\CertificationsDumpMgt.csproj",
         "projectName": "CertificationsDumpMgt",
-        "projectPath": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\CertificationsDumpMgt.csproj",
+        "projectPath": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\CertificationsDumpMgt.csproj",
         "packagesPath": "C:\\Users\\mahsin.kabir\\.nuget\\packages\\",
-        "outputPath": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\obj\\",
+        "outputPath": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,11 +32,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\Data\\Data.csproj": {
-                "projectPath": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\Data\\Data.csproj"
+              "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Data\\Data.csproj": {
+                "projectPath": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Data\\Data.csproj"
               },
-              "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\Service\\Service.csproj": {
-                "projectPath": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\Service\\Service.csproj"
+              "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Service\\Service.csproj": {
+                "projectPath": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Service\\Service.csproj"
               }
             }
           }
@@ -57,6 +57,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.0, )"
@@ -111,14 +119,14 @@
         }
       }
     },
-    "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\Data\\Data.csproj": {
+    "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Data\\Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\Data\\Data.csproj",
+        "projectUniqueName": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Data\\Data.csproj",
         "projectName": "Data",
-        "projectPath": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\Data\\Data.csproj",
+        "projectPath": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Data\\Data.csproj",
         "packagesPath": "C:\\Users\\mahsin.kabir\\.nuget\\packages\\",
-        "outputPath": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\Data\\obj\\",
+        "outputPath": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -196,14 +204,14 @@
         }
       }
     },
-    "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\Service\\Service.csproj": {
+    "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Service\\Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\Service\\Service.csproj",
+        "projectUniqueName": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Service\\Service.csproj",
         "projectName": "Service",
-        "projectPath": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\Service\\Service.csproj",
+        "projectPath": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Service\\Service.csproj",
         "packagesPath": "C:\\Users\\mahsin.kabir\\.nuget\\packages\\",
-        "outputPath": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\Service\\obj\\",
+        "outputPath": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Service\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -224,8 +232,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\Data\\Data.csproj": {
-                "projectPath": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\Data\\Data.csproj"
+              "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Data\\Data.csproj": {
+                "projectPath": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Data\\Data.csproj"
               }
             }
           }
@@ -246,6 +254,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
             "MailKit": {
               "target": "Package",
               "version": "[4.11.0, )"

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\Data\\Data.csproj": {}
+    "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Data\\Data.csproj": {}
   },
   "projects": {
-    "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\Data\\Data.csproj": {
+    "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Data\\Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\Data\\Data.csproj",
+        "projectUniqueName": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Data\\Data.csproj",
         "projectName": "Data",
-        "projectPath": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\Data\\Data.csproj",
+        "projectPath": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Data\\Data.csproj",
         "packagesPath": "C:\\Users\\mahsin.kabir\\.nuget\\packages\\",
-        "outputPath": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\Data\\obj\\",
+        "outputPath": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

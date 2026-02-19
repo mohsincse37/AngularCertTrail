@@ -16,14 +16,18 @@ namespace Data.Infrastructure
         // Marks an entity to be removed
         void Delete(T entity);
         void Delete(Expression<Func<T, bool>> where);
-        void ExceSql(string sql);
-        // Get an entity by int id
         T GetById(int id);
+        Task<T> GetByIdAsync(int id);
         // Get an entity using delegate
         T Get(Expression<Func<T, bool>> where);
+        Task<T> GetAsync(Expression<Func<T, bool>> where);
         // Gets all entities of type T
         IEnumerable<T> GetAll();
+        Task<IEnumerable<T>> GetAllAsync();
         // Gets entities using delegate
         IEnumerable<T> GetMany(Expression<Func<T, bool>> where);
+        Task<IEnumerable<T>> GetManyAsync(Expression<Func<T, bool>> where);
+        void ExceSql(string sql);
+        Task ExceSqlAsync(string sql);
     }
 }

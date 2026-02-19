@@ -22,9 +22,14 @@ namespace Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<RoleMenu> RoleMenus { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public virtual void Commit()
         {
             base.SaveChanges();
+        }
+        public virtual async Task CommitAsync()
+        {
+            await base.SaveChangesAsync();
         }
     }
 }

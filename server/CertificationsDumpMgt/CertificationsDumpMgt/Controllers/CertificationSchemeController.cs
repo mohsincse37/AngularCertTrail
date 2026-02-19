@@ -20,11 +20,11 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpGet]
         [Route("GetCertificationSchemes")]
-        public List<CertificationSchemeViewModel> GetCertificationSchemes()
+        public async Task<List<CertificationSchemeViewModel>> GetCertificationSchemes()
         {
             var cerSchemeAll = new List<CertificationSchemeViewModel>();
-            var cerSchemeList = _certificationSchemeService.GetCertificationSchemes().ToList();
-            var topicList = _topicService.GetTopics().ToList();
+            var cerSchemeList = (await _certificationSchemeService.GetCertificationSchemesAsync()).ToList();
+            var topicList = (await _topicService.GetTopicsAsync()).ToList();
             cerSchemeAll = (from s in cerSchemeList
                             join t in topicList on s.TopicID equals t.ID
 
@@ -45,17 +45,18 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpGet]
         [Route("GetCertificationTopicsWithSchemes/{accessType}/{accessDuration}")]
-        public List<CertificationSchemeViewModel> GetCertificationTopicsWithSchemes(int accessType, int accessDuration)
+        public async Task<List<CertificationSchemeViewModel>> GetCertificationTopicsWithSchemes(int accessType, int accessDuration)
         {
             var cerSchemeAll = new List<CertificationSchemeViewModel>();
-            var cerSchemeList = _certificationSchemeService.GetCertificationSchemes().ToList();
-            var topicList = _topicService.GetTopics().ToList();
+            var cerSchemeList = (await _certificationSchemeService.GetCertificationSchemesAsync()).ToList();
+            var topicList = (await _topicService.GetTopicsAsync()).ToList();
             cerSchemeAll = (from s in cerSchemeList
                             join t in topicList on s.TopicID equals t.ID
                             where s.AccessType == accessType && s.AccessDuration == accessDuration
 
                             select new CertificationSchemeViewModel()
-                            {                              
+                            {
+                                ID = s.ID,
                                 TopicID = t.ID,
                                 TopicTitle = t.TopicTitle,
                                 TopicDetail = t.Detail,
@@ -72,11 +73,11 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpGet]
         [Route("GetChosenScheme/{topicID}/{accessType}/{accDuration}")]
-        public List<CertificationSchemeViewModel> GetChosenScheme(int topicID, int accessType, int accDuration)
+        public async Task<List<CertificationSchemeViewModel>> GetChosenScheme(int topicID, int accessType, int accDuration)
         {
             var cerSchemeAll = new List<CertificationSchemeViewModel>();
-            var cerSchemeList = _certificationSchemeService.GetCertificationSchemes().ToList();
-            var topicList = _topicService.GetTopics().ToList();
+            var cerSchemeList = (await _certificationSchemeService.GetCertificationSchemesAsync()).ToList();
+            var topicList = (await _topicService.GetTopicsAsync()).ToList();
             var cerSchemeChosen = (from s in cerSchemeList
                             join t in topicList on s.TopicID equals t.ID
                             where s.TopicID == topicID && s.AccessType == accessType && s.AccessDuration == accDuration
@@ -120,11 +121,11 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpGet]
         [Route("GetAccessTypes/{topicID}")]
-        public List<CertificationSchemeViewModel> GetAccessTypes(int topicID)
+        public async Task<List<CertificationSchemeViewModel>> GetAccessTypes(int topicID)
         {
             var cerSchemeAll = new List<CertificationSchemeViewModel>();
-            var cerSchemeList = _certificationSchemeService.GetCertificationSchemes().ToList();
-            var topicList = _topicService.GetTopics().ToList();
+            var cerSchemeList = (await _certificationSchemeService.GetCertificationSchemesAsync()).ToList();
+            var topicList = (await _topicService.GetTopicsAsync()).ToList();
             cerSchemeAll = (from s in cerSchemeList
                             join t in topicList on s.TopicID equals t.ID
                             where s.TopicID == topicID
@@ -140,11 +141,11 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpGet]
         [Route("GetDurationtypes/{topicID}")]
-        public List<CertificationSchemeViewModel> GetDurationtypes(int topicID)
+        public async Task<List<CertificationSchemeViewModel>> GetDurationtypes(int topicID)
         {
             var cerSchemeAll = new List<CertificationSchemeViewModel>();
-            var cerSchemeList = _certificationSchemeService.GetCertificationSchemes().ToList();
-            var topicList = _topicService.GetTopics().ToList();
+            var cerSchemeList = (await _certificationSchemeService.GetCertificationSchemesAsync()).ToList();
+            var topicList = (await _topicService.GetTopicsAsync()).ToList();
             cerSchemeAll = (from s in cerSchemeList
                             join t in topicList on s.TopicID equals t.ID
                             where s.TopicID == topicID
@@ -159,11 +160,11 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpGet]
         [Route("GetSchemeAmount/{topicID}/{accessType}/{durationType}")]
-        public List<CertificationSchemeViewModel> GetSchemeAmount(int topicID, int accessType, int durationType)
+        public async Task<List<CertificationSchemeViewModel>> GetSchemeAmount(int topicID, int accessType, int durationType)
         {
             var cerSchemeAll = new List<CertificationSchemeViewModel>();
-            var cerSchemeList = _certificationSchemeService.GetCertificationSchemes().ToList();
-            var topicList = _topicService.GetTopics().ToList();
+            var cerSchemeList = (await _certificationSchemeService.GetCertificationSchemesAsync()).ToList();
+            var topicList = (await _topicService.GetTopicsAsync()).ToList();
             cerSchemeAll = (from s in cerSchemeList
                             join t in topicList on s.TopicID equals t.ID
                             where s.TopicID == topicID && s.AccessType == accessType && s.AccessDuration == durationType
@@ -178,18 +179,18 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpGet]
         [Route("GetCertificationScheme/{id}")]
-        public CertificationScheme GetCertificationScheme(int id)
+        public async Task<CertificationScheme> GetCertificationScheme(int id)
         {
-            return _certificationSchemeService.GetCertificationScheme(id);
+            return await _certificationSchemeService.GetCertificationSchemeAsync(id);
         }
 
         [HttpPost]
         [Route("AddCertificationScheme")]
-        public int AddCertificationScheme(CertificationScheme objCertificationScheme)
+        public async Task<int> AddCertificationScheme(CertificationScheme objCertificationScheme)
         {
             try
             {
-                _certificationSchemeService.AddCertificationScheme(objCertificationScheme);
+                await _certificationSchemeService.AddCertificationSchemeAsync(objCertificationScheme);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -200,11 +201,11 @@ namespace CertificationsDumpMgt.Controllers
 
         [HttpPut]
         [Route("UpdateCertificationScheme/{id}")]
-        public int UpdateCertificationScheme(int id, CertificationScheme objCertificationScheme)
+        public async Task<int> UpdateCertificationScheme(int id, CertificationScheme objCertificationScheme)
         {
             try
             {
-                _certificationSchemeService.UpdateCertificationScheme(objCertificationScheme);
+                await _certificationSchemeService.UpdateCertificationSchemeAsync(objCertificationScheme);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -215,11 +216,11 @@ namespace CertificationsDumpMgt.Controllers
 
         [HttpDelete]
         [Route("DeleteCertificationScheme/{id}")]
-        public int DeleteCertificationScheme(int id)
+        public async Task<int> DeleteCertificationScheme(int id)
         {
             try
             {
-                _certificationSchemeService.DeleteCertificationScheme(id);
+                await _certificationSchemeService.DeleteCertificationSchemeAsync(id);
             }
             catch (DbUpdateConcurrencyException)
             {

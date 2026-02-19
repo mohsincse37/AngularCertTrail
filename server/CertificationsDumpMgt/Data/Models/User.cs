@@ -9,7 +9,7 @@ namespace Data.Models
         [MaxLength(150)]
         public string? UserName { get; set; }
 
-        [MaxLength(50)]       
+        [MaxLength(200)]       
         public required string UserPass { get; set; }
 
         public int? Age { get; set; }

@@ -6,12 +6,12 @@ namespace Service
 {
     public interface ICertificationTopicService
     {
-        IEnumerable<CertificationTopic> GetTopics();
-        CertificationTopic GetCertificationTopic(int topicID);
-        void CreateCertificationTopic(CertificationTopic certificationTopic);
-        void UpdateCertificationTopic(CertificationTopic certificationTopic);
-        void DeleteCertificationTopicReferences(int topicID);
-        void SaveCertificationTopic();
+        Task<IEnumerable<CertificationTopic>> GetTopicsAsync();
+        Task<CertificationTopic> GetCertificationTopicAsync(int topicID);
+        Task CreateCertificationTopicAsync(CertificationTopic certificationTopic);
+        Task UpdateCertificationTopicAsync(CertificationTopic certificationTopic);
+        Task DeleteCertificationTopicReferencesAsync(int topicID);
+        Task SaveCertificationTopicAsync();
     }
     public class CertificationTopicService : ICertificationTopicService
     {
@@ -26,35 +26,35 @@ namespace Service
 
         #region ICategoryService Members
 
-        public IEnumerable<CertificationTopic> GetTopics()
+        public async Task<IEnumerable<CertificationTopic>> GetTopicsAsync()
         {
-            return certificationTopicRepository.GetAll();
+            return await certificationTopicRepository.GetAllAsync();
 
         }
-        public CertificationTopic GetCertificationTopic(int topicID)
+        public async Task<CertificationTopic> GetCertificationTopicAsync(int topicID)
         {
-            return certificationTopicRepository.GetById(topicID);
+            return await certificationTopicRepository.GetByIdAsync(topicID);
 
         }
-        public void CreateCertificationTopic(CertificationTopic certificationTopic)
+        public async Task CreateCertificationTopicAsync(CertificationTopic certificationTopic)
         {
             certificationTopicRepository.Add(certificationTopic);
-            SaveCertificationTopic();
+            await SaveCertificationTopicAsync();
         }
-        public void UpdateCertificationTopic(CertificationTopic certificationTopic)
+        public async Task UpdateCertificationTopicAsync(CertificationTopic certificationTopic)
         {
             certificationTopicRepository.Update(certificationTopic);
-            SaveCertificationTopic();
+            await SaveCertificationTopicAsync();
         }
-        public void DeleteCertificationTopicReferences(int topicID)
+        public async Task DeleteCertificationTopicReferencesAsync(int topicID)
         {
-            CertificationTopic question = certificationTopicRepository.GetById(topicID);
-            certificationTopicRepository.Delete(question);
-            SaveCertificationTopic();
+            CertificationTopic topic = await certificationTopicRepository.GetByIdAsync(topicID);
+            certificationTopicRepository.Delete(topic);
+            await SaveCertificationTopicAsync();
         }
-        public void SaveCertificationTopic()
+        public async Task SaveCertificationTopicAsync()
         {
-            unitOfWork.Commit();
+            await unitOfWork.CommitAsync();
         }
         #endregion
     }

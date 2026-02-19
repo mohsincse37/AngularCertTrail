@@ -27,11 +27,11 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpGet]
         [Route("GetQuestionOption")]
-        public List<QuestionOptionViewModel> GetQuestionOption()
+        public async Task<List<QuestionOptionViewModel>> GetQuestionOption()
         {
             var questionOptionAll = new List<QuestionOptionViewModel>();
-            var questionList = _questionService.GetQuestions().ToList();
-            var optionList = _questionOptionService.GetQuestionOptions().ToList();
+            var questionList = (await _questionService.GetQuestionsAsync()).ToList();
+            var optionList = (await _questionOptionService.GetQuestionOptionsAsync()).ToList();
             questionOptionAll = (from q in questionList
                            join o in optionList on q.ID equals o.QuestionID
 
@@ -50,21 +50,28 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpGet]
         [Route("GetQuestionWithOptionByTopicID/{topicID}")]
-        public List<QuestionWithOption> GetQuestionWithOptionByTopicID(int topicID)
+        public async Task<List<QuestionWithOption>> GetQuestionWithOptionByTopicID(int topicID)
         {
             var questionAll = new List<QuestionViewModel>();
-            var questionList = _questionService.GetQuestions().Where(q => q.TopicID == topicID).ToList();              
+            var allQuestions = await _questionService.GetQuestionsAsync();
+            var questionList = allQuestions.Where(q => q.TopicID == topicID).ToList();
+            var corrOptionAllList = (await _qCorrOptionService.GetQuestionCorrectOptionsAsync()).ToList();
+            var questionOptionAllList = (await _questionOptionService.GetQuestionOptionsAsync()).ToList();
             
             for (int i = 0; i < questionList.Count; i++)
             {
                 string optionTitleAll = string.Empty;
                 string optionIDAll = string.Empty;
-                var corrOptionList = _qCorrOptionService.GetQuestionCorrectOptions().Where(a => a.QuestionID == questionList[i].ID).OrderBy(a=>a.CorrectionOptionID).ToList();
+                var currentQuestionID = questionList[i].ID;
+                var corrOptionList = corrOptionAllList.Where(a => a.QuestionID == currentQuestionID).OrderBy(a => a.CorrectionOptionID).ToList();
                 for (int j = 0; j < corrOptionList.Count; j++)
                 {
-                    var questionOption = _questionOptionService.GetQuestionOption(corrOptionList[j].CorrectionOptionID);
-                    optionTitleAll += questionOption.OptionTitle + ","; 
-                    optionIDAll += questionOption.ID + ",";
+                    var questionOption = questionOptionAllList.FirstOrDefault(o => o.ID == corrOptionList[j].CorrectionOptionID);
+                    if (questionOption != null)
+                    {
+                        optionTitleAll += questionOption.OptionTitle + ",";
+                        optionIDAll += questionOption.ID + ",";
+                    }
                 }
                 optionTitleAll = optionTitleAll.TrimEnd(',');
                 optionIDAll = optionIDAll.TrimEnd(',');
@@ -87,7 +94,7 @@ namespace CertificationsDumpMgt.Controllers
             var questionWithOptionAll = new List<QuestionWithOption>();
             for (int i = 0; i < questionAll.Count; i++)
             {
-                var options = _questionOptionService.GetQuestionOptions().Where(o => o.QuestionID == questionAll[i].ID).OrderBy(o => o.OrderNo).ToList();
+                var options = questionOptionAllList.Where(o => o.QuestionID == questionAll[i].ID).OrderBy(o => o.OrderNo).ToList();
               
                 questionWithOptionAll.Add(new QuestionWithOption()
                 {
@@ -106,10 +113,11 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpGet]
         [Route("GetOptionDataByQuestionID/{questionID}")]
-        public List<MultiSelectOption> GetOptionDataByQuestionID(int questionID)
+        public async Task<List<MultiSelectOption>> GetOptionDataByQuestionID(int questionID)
         {
             var mulOption = new List<MultiSelectOption>();
-            var options = _questionOptionService.GetQuestionOptions().Where(o => o.QuestionID == questionID).OrderBy(o => o.OrderNo).ToList();
+            var allOptions = await _questionOptionService.GetQuestionOptionsAsync();
+            var options = allOptions.Where(o => o.QuestionID == questionID).OrderBy(o => o.OrderNo).ToList();
 
             mulOption = (from o in options
                          select new MultiSelectOption()
@@ -121,31 +129,33 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpGet]
         [Route("GetQuestionOption/{id}")]
-        public QuestionOption GetQuestionOption(int id)
+        public async Task<QuestionOption> GetQuestionOption(int id)
         {           
-            var questionOption = _questionOptionService.GetQuestionOption(id);
+            var questionOption = await _questionOptionService.GetQuestionOptionAsync(id);
             return questionOption;
         }
         [HttpGet]
         [Route("GetQuestionWithTopicWithOption/{id}")]
-        public QuestionOptionViewModel GetQuestionWithTopicWithOption(int id)
+        public async Task<QuestionOptionViewModel> GetQuestionWithTopicWithOption(int id)
         {
-            var questionOptionWithQuesWithTo = GetQuestionOption().FirstOrDefault(o => o.ID == id);
+            var options = await GetQuestionOption();
+            var questionOptionWithQuesWithTo = options.FirstOrDefault(o => o.ID == id);
             return questionOptionWithQuesWithTo;
         }
         [HttpPost]
         [Route("AddQuestionOption")]
-        public int AddQuestionOption([FromForm] QuestionOptionViewModel objQuestionOptionViewModel)
+        public async Task<int> AddQuestionOption([FromForm] QuestionOptionViewModel objQuestionOptionViewModel)
         {
             try
             {
                 var objQuestionOption = new QuestionOption();
 
-                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required)) //transaction should be placed upon using context always
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, TransactionScopeAsyncFlowOption.Enabled)) //transaction should be placed upon using context always
                 {
                     if (objQuestionOptionViewModel.file != null)
                     {
-                        int maxOID = GetQuestionOption().Max(o => o.ID);
+                        var options = await GetQuestionOption();
+                        int maxOID = options.Max(o => o.ID);
                         maxOID = maxOID + 1;
 
                         var fName = maxOID.ToString();
@@ -161,7 +171,7 @@ namespace CertificationsDumpMgt.Controllers
                     objQuestionOption.OptionTitle = objQuestionOptionViewModel.OptionTitle;
                     objQuestionOption.OrderNo = objQuestionOptionViewModel.OrderNo;
                     objQuestionOption.QuestionID = objQuestionOptionViewModel.QuestionID;
-                    _questionOptionService.CreateQuestionOption(objQuestionOption);
+                    await _questionOptionService.CreateQuestionOptionAsync(objQuestionOption);
                     scope.Complete();
                 }
             }
@@ -174,11 +184,11 @@ namespace CertificationsDumpMgt.Controllers
        
         [HttpPut]
         [Route("UpdateQuestionOption/{id}")]
-        public int UpdateQuestionOption(int id, [FromForm] QuestionOptionViewModel objQuestionOptionViewModel)
+        public async Task<int> UpdateQuestionOption(int id, [FromForm] QuestionOptionViewModel objQuestionOptionViewModel)
         {
             try
             {
-                var objQuestionOption = _questionOptionService.GetQuestionOption(id);
+                var objQuestionOption = await _questionOptionService.GetQuestionOptionAsync(id);
                 
                 if (objQuestionOptionViewModel.file != null)
                 {
@@ -201,7 +211,7 @@ namespace CertificationsDumpMgt.Controllers
                 objQuestionOption.OrderNo = objQuestionOptionViewModel.OrderNo;
                 objQuestionOption.QuestionID = objQuestionOptionViewModel.QuestionID;
                
-                _questionOptionService.UpdateQuestionOption(objQuestionOption);
+                await _questionOptionService.UpdateQuestionOptionAsync(objQuestionOption);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -212,16 +222,16 @@ namespace CertificationsDumpMgt.Controllers
 
         [HttpDelete]
         [Route("DeleteQuestionOption/{id}")]
-        public int DeleteQuestionOption(int id)
+        public async Task<int> DeleteQuestionOption(int id)
         {
             try
             {
-                var objQuestionOption = _questionOptionService.GetQuestionOption(id);
+                var objQuestionOption = await _questionOptionService.GetQuestionOptionAsync(id);
                 if (System.IO.File.Exists(objQuestionOption.OptionImgPath))
                 {
                     System.IO.File.Delete(objQuestionOption.OptionImgPath);
                 }
-                _questionOptionService.DeleteQuestionOptionReferences(id);
+                await _questionOptionService.DeleteQuestionOptionReferencesAsync(id);
             }
             catch (DbUpdateConcurrencyException)
             {

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "HTGMY++UagjOISWiTX94ThjCs2hPK3WNzbjKXU2usfg=",
+  "Hash": "9d7V3OUy6Y8ZwL1wm2dwSalY0yX6UeLH7sjRZZR8ZoM=",
   "Source": "CertificationsDumpMgt",
   "BasePath": "_content/CertificationsDumpMgt",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "CertificationsDumpMgt\\wwwroot",
       "Source": "CertificationsDumpMgt",
-      "ContentRoot": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
+      "ContentRoot": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
       "BasePath": "_content/CertificationsDumpMgt",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\1.png",
+      "Identity": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\1.png",
       "SourceId": "CertificationsDumpMgt",
       "SourceType": "Discovered",
-      "ContentRoot": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
+      "ContentRoot": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
       "BasePath": "_content/CertificationsDumpMgt",
       "RelativePath": "Images/OptionImages/1#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -38,10 +38,10 @@
       "OriginalItemSpec": "wwwroot\\Images\\OptionImages\\1.png"
     },
     {
-      "Identity": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\13.jpg",
+      "Identity": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\13.jpg",
       "SourceId": "CertificationsDumpMgt",
       "SourceType": "Discovered",
-      "ContentRoot": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
+      "ContentRoot": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
       "BasePath": "_content/CertificationsDumpMgt",
       "RelativePath": "Images/OptionImages/13#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -59,10 +59,10 @@
       "OriginalItemSpec": "wwwroot\\Images\\OptionImages\\13.jpg"
     },
     {
-      "Identity": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\15.jpeg",
+      "Identity": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\15.jpeg",
       "SourceId": "CertificationsDumpMgt",
       "SourceType": "Discovered",
-      "ContentRoot": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
+      "ContentRoot": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
       "BasePath": "_content/CertificationsDumpMgt",
       "RelativePath": "Images/OptionImages/15#[.{fingerprint}]?.jpeg",
       "AssetKind": "All",
@@ -80,10 +80,10 @@
       "OriginalItemSpec": "wwwroot\\Images\\OptionImages\\15.jpeg"
     },
     {
-      "Identity": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\8.jpg",
+      "Identity": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\8.jpg",
       "SourceId": "CertificationsDumpMgt",
       "SourceType": "Discovered",
-      "ContentRoot": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
+      "ContentRoot": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
       "BasePath": "_content/CertificationsDumpMgt",
       "RelativePath": "Images/OptionImages/8#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -101,10 +101,10 @@
       "OriginalItemSpec": "wwwroot\\Images\\OptionImages\\8.jpg"
     },
     {
-      "Identity": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\QuestionImages\\1.png",
+      "Identity": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\QuestionImages\\1.png",
       "SourceId": "CertificationsDumpMgt",
       "SourceType": "Discovered",
-      "ContentRoot": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
+      "ContentRoot": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
       "BasePath": "_content/CertificationsDumpMgt",
       "RelativePath": "Images/QuestionImages/1#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -122,10 +122,10 @@
       "OriginalItemSpec": "wwwroot\\Images\\QuestionImages\\1.png"
     },
     {
-      "Identity": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\QuestionImages\\2.jpg",
+      "Identity": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\QuestionImages\\2.jpg",
       "SourceId": "CertificationsDumpMgt",
       "SourceType": "Discovered",
-      "ContentRoot": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
+      "ContentRoot": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
       "BasePath": "_content/CertificationsDumpMgt",
       "RelativePath": "Images/QuestionImages/2#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -143,10 +143,10 @@
       "OriginalItemSpec": "wwwroot\\Images\\QuestionImages\\2.jpg"
     },
     {
-      "Identity": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\QuestionImages\\5.jpg",
+      "Identity": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\QuestionImages\\5.jpg",
       "SourceId": "CertificationsDumpMgt",
       "SourceType": "Discovered",
-      "ContentRoot": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
+      "ContentRoot": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
       "BasePath": "_content/CertificationsDumpMgt",
       "RelativePath": "Images/QuestionImages/5#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -164,10 +164,10 @@
       "OriginalItemSpec": "wwwroot\\Images\\QuestionImages\\5.jpg"
     },
     {
-      "Identity": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\1.png",
+      "Identity": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\1.png",
       "SourceId": "CertificationsDumpMgt",
       "SourceType": "Discovered",
-      "ContentRoot": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
+      "ContentRoot": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
       "BasePath": "_content/CertificationsDumpMgt",
       "RelativePath": "Images/TopicImages/1#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -185,10 +185,10 @@
       "OriginalItemSpec": "wwwroot\\Images\\TopicImages\\1.png"
     },
     {
-      "Identity": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\12.jpg",
+      "Identity": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\12.jpg",
       "SourceId": "CertificationsDumpMgt",
       "SourceType": "Discovered",
-      "ContentRoot": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
+      "ContentRoot": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
       "BasePath": "_content/CertificationsDumpMgt",
       "RelativePath": "Images/TopicImages/12#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -206,10 +206,10 @@
       "OriginalItemSpec": "wwwroot\\Images\\TopicImages\\12.jpg"
     },
     {
-      "Identity": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\3.png",
+      "Identity": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\3.png",
       "SourceId": "CertificationsDumpMgt",
       "SourceType": "Discovered",
-      "ContentRoot": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
+      "ContentRoot": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
       "BasePath": "_content/CertificationsDumpMgt",
       "RelativePath": "Images/TopicImages/3#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -227,10 +227,10 @@
       "OriginalItemSpec": "wwwroot\\Images\\TopicImages\\3.png"
     },
     {
-      "Identity": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\9.png",
+      "Identity": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\9.png",
       "SourceId": "CertificationsDumpMgt",
       "SourceType": "Discovered",
-      "ContentRoot": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
+      "ContentRoot": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\",
       "BasePath": "_content/CertificationsDumpMgt",
       "RelativePath": "Images/TopicImages/9#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -251,7 +251,7 @@
   "Endpoints": [
     {
       "Route": "Images/OptionImages/1.2qyvxkr448.png",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\1.png",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -272,7 +272,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 16 Mar 2025 06:07:13 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -296,7 +296,7 @@
     },
     {
       "Route": "Images/OptionImages/1.png",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\1.png",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -317,7 +317,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 16 Mar 2025 06:07:13 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -333,7 +333,7 @@
     },
     {
       "Route": "Images/OptionImages/13.jpg",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\13.jpg",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\13.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -354,7 +354,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 09 Apr 2025 05:40:32 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -370,7 +370,7 @@
     },
     {
       "Route": "Images/OptionImages/13.od47wfqpfg.jpg",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\13.jpg",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\13.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -391,7 +391,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 09 Apr 2025 05:40:32 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -415,7 +415,7 @@
     },
     {
       "Route": "Images/OptionImages/15.1puxzoyzm0.jpeg",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\15.jpeg",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\15.jpeg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -436,7 +436,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 09 Apr 2025 05:52:32 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -460,7 +460,7 @@
     },
     {
       "Route": "Images/OptionImages/15.jpeg",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\15.jpeg",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\15.jpeg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -481,7 +481,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 09 Apr 2025 05:52:32 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -497,7 +497,7 @@
     },
     {
       "Route": "Images/OptionImages/8.50imdnktp6.jpg",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\8.jpg",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\8.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -518,7 +518,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 09 Apr 2025 05:40:01 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -542,7 +542,7 @@
     },
     {
       "Route": "Images/OptionImages/8.jpg",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\8.jpg",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\OptionImages\\8.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -563,7 +563,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 09 Apr 2025 05:40:01 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -579,7 +579,7 @@
     },
     {
       "Route": "Images/QuestionImages/1.orrk42nwi7.png",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\QuestionImages\\1.png",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\QuestionImages\\1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -600,7 +600,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 16 Mar 2025 06:07:13 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -624,7 +624,7 @@
     },
     {
       "Route": "Images/QuestionImages/1.png",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\QuestionImages\\1.png",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\QuestionImages\\1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -645,7 +645,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 16 Mar 2025 06:07:13 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -661,7 +661,7 @@
     },
     {
       "Route": "Images/QuestionImages/2.jpg",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\QuestionImages\\2.jpg",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\QuestionImages\\2.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -682,7 +682,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 09 Apr 2025 05:36:09 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -698,7 +698,7 @@
     },
     {
       "Route": "Images/QuestionImages/2.od47wfqpfg.jpg",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\QuestionImages\\2.jpg",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\QuestionImages\\2.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -719,7 +719,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 09 Apr 2025 05:36:09 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -743,7 +743,7 @@
     },
     {
       "Route": "Images/QuestionImages/5.6jep2v6a98.jpg",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\QuestionImages\\5.jpg",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\QuestionImages\\5.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -764,7 +764,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 09 Apr 2025 05:39:08 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -788,7 +788,7 @@
     },
     {
       "Route": "Images/QuestionImages/5.jpg",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\QuestionImages\\5.jpg",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\QuestionImages\\5.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -809,7 +809,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 09 Apr 2025 05:39:08 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -825,7 +825,7 @@
     },
     {
       "Route": "Images/TopicImages/1.m50ve2ped7.png",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\1.png",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -846,7 +846,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 17 Mar 2025 05:12:40 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -870,7 +870,7 @@
     },
     {
       "Route": "Images/TopicImages/1.png",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\1.png",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\1.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -891,7 +891,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 17 Mar 2025 05:12:40 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -907,7 +907,7 @@
     },
     {
       "Route": "Images/TopicImages/12.j0jn1ijqns.jpg",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\12.jpg",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\12.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -928,7 +928,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 09 Apr 2025 05:22:04 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -952,7 +952,7 @@
     },
     {
       "Route": "Images/TopicImages/12.jpg",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\12.jpg",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\12.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -973,7 +973,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 09 Apr 2025 05:22:04 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -989,7 +989,7 @@
     },
     {
       "Route": "Images/TopicImages/3.2qyvxkr448.png",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\3.png",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\3.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1010,7 +1010,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 16 Mar 2025 06:07:13 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1034,7 +1034,7 @@
     },
     {
       "Route": "Images/TopicImages/3.png",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\3.png",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\3.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1055,7 +1055,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 16 Mar 2025 06:07:13 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1071,7 +1071,7 @@
     },
     {
       "Route": "Images/TopicImages/9.6f1qizrqhf.png",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\9.png",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\9.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1092,7 +1092,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 16 Mar 2025 06:07:13 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1116,7 +1116,7 @@
     },
     {
       "Route": "Images/TopicImages/9.png",
-      "AssetFile": "F:\\Work\\CertificateDumps\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\9.png",
+      "AssetFile": "F:\\Work\\AngularCertTrail\\server\\CertificationsDumpMgt\\CertificationsDumpMgt\\wwwroot\\Images\\TopicImages\\9.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1137,7 +1137,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 16 Mar 2025 06:07:13 GMT"
+          "Value": "Sun, 08 Feb 2026 09:43:17 GMT"
         },
         {
           "Name": "Cache-Control",

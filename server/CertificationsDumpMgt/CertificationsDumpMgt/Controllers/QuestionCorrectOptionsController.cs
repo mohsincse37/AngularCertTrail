@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Service;
+using System.Transactions;
 
 namespace CertificationsDumpMgt.Controllers
 {
@@ -20,38 +21,41 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpGet]
         [Route("GetQuestionCorrectOptions")]
-        public List<QuestionCorrectOptionMapping> GetQuestionCorrectOptions()
+        public async Task<List<QuestionCorrectOptionMapping>> GetQuestionCorrectOptions()
         {
             var qCorrOptionsAll = new List<QuestionCorrectOptionMapping>();
-            qCorrOptionsAll = _qCorrOptionService.GetQuestionCorrectOptions().ToList();
+            qCorrOptionsAll = (await _qCorrOptionService.GetQuestionCorrectOptionsAsync()).ToList();
             return qCorrOptionsAll;
         }
         [HttpGet]
         [Route("GetQuestionCorrectOption/{id}")]
-        public QuestionCorrectOptionMapping GetQuestionCorrectOption(int id)
+        public async Task<QuestionCorrectOptionMapping> GetQuestionCorrectOption(int id)
         {
-            var corrOption = _qCorrOptionService.GetQuestionCorrectOption(id);
+            var corrOption = await _qCorrOptionService.GetQuestionCorrectOptionAsync(id);
             return corrOption;
         }
         [HttpPost]
         [Route("CreateQuestionCorrectOptions")]
-        public int CreateQuestionCorrectOptions(QuestionCorrectOptionMappingViewModel objQCorrOptions)
+        public async Task<int> CreateQuestionCorrectOptions(QuestionCorrectOptionMappingViewModel objQCorrOptions)
         {
             try
             {
-                var oldQuestion = _questionService.GetQuestions().SingleOrDefault(q => q.ID == objQCorrOptions.QuestionID);                
-                oldQuestion.AnsDescription = objQCorrOptions.AnsDescription;
-                _questionService.UpdateQuestion(oldQuestion);
-                          
-                int[] optionArray = Array.ConvertAll(objQCorrOptions.CorrectOptionID.Split(','), int.Parse);
-                foreach (var item in optionArray)
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    var questionCorrOption = new QuestionCorrectOptionMapping();
-                    questionCorrOption.QuestionID = objQCorrOptions.QuestionID;
-                    questionCorrOption.CorrectionOptionID = item;
-                    _qCorrOptionService.CreateQuestionCorrectOptions(questionCorrOption);
+                    var oldQuestion = await _questionService.GetCertificationQuestionAsync(objQCorrOptions.QuestionID);
+                    oldQuestion.AnsDescription = objQCorrOptions.AnsDescription;
+                    await _questionService.UpdateQuestionAsync(oldQuestion);
+
+                    int[] optionArray = Array.ConvertAll(objQCorrOptions.CorrectOptionID.Split(','), int.Parse);
+                    foreach (var item in optionArray)
+                    {
+                        var questionCorrOption = new QuestionCorrectOptionMapping();
+                        questionCorrOption.QuestionID = objQCorrOptions.QuestionID;
+                        questionCorrOption.CorrectionOptionID = item;
+                        await _qCorrOptionService.CreateQuestionCorrectOptionsAsync(questionCorrOption);
+                    }
+                    scope.Complete();
                 }
-                
             }
             catch (DbUpdateConcurrencyException)
             {

@@ -6,7 +6,7 @@ namespace Service
 {
     public interface IRoleService
     {
-        IEnumerable<Role> GetRoles();
+        Task<IEnumerable<Role>> GetRolesAsync();
        
     }
     public class RoleService : IRoleService
@@ -22,9 +22,9 @@ namespace Service
 
         #region ICategoryService Members
 
-        public IEnumerable<Role> GetRoles()
+        public async Task<IEnumerable<Role>> GetRolesAsync()
         {
-            return roleRepository.GetAll();
+            return await roleRepository.GetAllAsync();
 
         }
         

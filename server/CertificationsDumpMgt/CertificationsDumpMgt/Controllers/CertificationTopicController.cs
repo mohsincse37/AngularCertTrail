@@ -27,33 +27,37 @@ namespace CertificationsDumpMgt.Controllers
         }      
         [HttpGet]
         [Route("GetCertificationTopics")]
-        public List<CertificationTopic> GetCertificationTopics()
+        public async Task<List<CertificationTopic>> GetCertificationTopics()
         {           
-            var topicList = _topicService.GetTopics().OrderBy(t => t.ID).ToList();          
+            var topics = await _topicService.GetTopicsAsync();
+            var topicList = topics.OrderBy(t => t.ID).ToList();          
             return topicList;
         }
         [HttpGet]
         [Route("GetActiveNonFreeCertificationTopics")]
-        public List<CertificationTopic> GetActiveNonFreeCertificationTopics()
+        public async Task<List<CertificationTopic>> GetActiveNonFreeCertificationTopics()
         {
-            var topicList = _topicService.GetTopics().Where(t => t.IsActive == 1 && t.IsPublicTopic != 1).OrderBy(t => t.ID).ToList();
+            var topics = await _topicService.GetTopicsAsync();
+            var topicList = topics.Where(t => t.IsActive == 1 && t.IsPublicTopic != 1).OrderBy(t => t.ID).ToList();
             return topicList;
         }
         [HttpGet]
         [Route("GetActiveCertificationTopicsByUserID")]
-        public List<CertificationTopic> GetActiveCertificationTopicsByUserID()
+        public async Task<List<CertificationTopic>> GetActiveCertificationTopicsByUserID()
         {
             var userTopicAll = new List<CertificationTopic>();
-            var topicList = _topicService.GetTopics().Where(a => a.IsActive == 1).OrderBy(t => t.ID).ToList();
+            var allTopics = await _topicService.GetTopicsAsync();
+            var topicList = allTopics.Where(a => a.IsActive == 1).OrderBy(t => t.ID).ToList();
 
             if (loginId == "" || loginId == "undefined")
             {
-                userTopicAll = _topicService.GetTopics().Where(a => a.IsActive == 1 && a.IsPublicTopic == 1).OrderBy(t => t.ID).ToList();
+                userTopicAll = allTopics.Where(a => a.IsActive == 1 && a.IsPublicTopic == 1).OrderBy(t => t.ID).ToList();
             }
             else
             {
-                topicList = _topicService.GetTopics().Where(a => a.IsActive == 1 && a.IsPublicTopic != 1).OrderBy(t => t.ID).ToList();
-                var userTopicList = _userTopicService.GetUserTopics().Where(u => u.UserID == loginId).ToList();
+                topicList = allTopics.Where(a => a.IsActive == 1 && a.IsPublicTopic != 1).OrderBy(t => t.ID).ToList();
+                var userTopics = await _userTopicService.GetUserTopicsAsync();
+                var userTopicList = userTopics.Where(u => u.UserID == loginId).ToList();
                 userTopicAll = (from t in topicList
                                 join ut in userTopicList on t.ID equals ut.TopicID
                                 where ut.FromDate <= DateTime.Today && ut.ToDate >= DateTime.Today
@@ -72,9 +76,9 @@ namespace CertificationsDumpMgt.Controllers
         }
         [HttpGet]
         [Route("GetCertificationTopic/{id}")]
-        public CertificationTopic GetCertificationTopic(int id)
+        public async Task<CertificationTopic> GetCertificationTopic(int id)
         {            
-            var topic = _topicService.GetCertificationTopic(id);
+            var topic = await _topicService.GetCertificationTopicAsync(id);
             return topic;
         }
 
@@ -85,11 +89,12 @@ namespace CertificationsDumpMgt.Controllers
             try
             {
                 var certificationTopic = new CertificationTopic();
-                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required)) //transaction should be placed upon using context always
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, TransactionScopeAsyncFlowOption.Enabled)) //transaction should be placed upon using context always
                 {
                     if (objCertificationTopicViewModel.file != null)
                     {
-                        int maxTID = GetCertificationTopics().Max(q => q.ID);
+                        var topics = await GetCertificationTopics();
+                        int maxTID = topics.Max(q => q.ID);
                         maxTID = maxTID + 1;
                         var fName = maxTID.ToString();//Path.GetFileName(objCertificationTopicViewModel.file.FileName);
                         string extension = System.IO.Path.GetExtension(objCertificationTopicViewModel.file.FileName);
@@ -106,7 +111,7 @@ namespace CertificationsDumpMgt.Controllers
                     certificationTopic.Detail = objCertificationTopicViewModel.Detail;
                     certificationTopic.IsActive = objCertificationTopicViewModel.IsActive;
                     certificationTopic.IsPublicTopic = objCertificationTopicViewModel.IsPublicTopic;
-                    _topicService.CreateCertificationTopic(certificationTopic);
+                    await _topicService.CreateCertificationTopicAsync(certificationTopic);
                     scope.Complete();
                 }
             }
@@ -127,11 +132,11 @@ namespace CertificationsDumpMgt.Controllers
 
         [HttpPut]
         [Route("UpdateCertificationTopic/{id}")]
-        public int UpdateCertificationTopic(int id, [FromForm] CertificationTopicViewModel objCertificationTopicViewModel)
+        public async Task<int> UpdateCertificationTopic(int id, [FromForm] CertificationTopicViewModel objCertificationTopicViewModel)
         {
             try
             {
-                var topicInfo = _topicService.GetCertificationTopic(id);              
+                var topicInfo = await _topicService.GetCertificationTopicAsync(id);              
                 if (objCertificationTopicViewModel.file != null)
                 {
                     if (System.IO.File.Exists(topicInfo.TopicImgPath))
@@ -152,7 +157,7 @@ namespace CertificationsDumpMgt.Controllers
                 topicInfo.Detail = objCertificationTopicViewModel.Detail;
                 topicInfo.IsActive = objCertificationTopicViewModel.IsActive;
                 topicInfo.IsPublicTopic = objCertificationTopicViewModel.IsPublicTopic;
-                _topicService.UpdateCertificationTopic(topicInfo);
+                await _topicService.UpdateCertificationTopicAsync(topicInfo);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -163,16 +168,16 @@ namespace CertificationsDumpMgt.Controllers
 
         [HttpDelete]
         [Route("DeleteCertificationTopic/{id}")]
-        public int DeleteCertificationTopic(int id)
+        public async Task<int> DeleteCertificationTopic(int id)
         {
             try
             {
-                var topicInfo = _topicService.GetCertificationTopic(id);
+                var topicInfo = await _topicService.GetCertificationTopicAsync(id);
                 if (System.IO.File.Exists(topicInfo.TopicImgPath))
                 {
                     System.IO.File.Delete(topicInfo.TopicImgPath);
                 }
-                _topicService.DeleteCertificationTopicReferences(id);
+                await _topicService.DeleteCertificationTopicReferencesAsync(id);
             }
             catch (DbUpdateConcurrencyException)
             {

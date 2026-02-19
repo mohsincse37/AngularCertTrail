@@ -6,12 +6,12 @@ namespace Service
 {
     public interface ICertificationSchemeService
     {
-        IEnumerable<CertificationScheme> GetCertificationSchemes();
-        CertificationScheme GetCertificationScheme(int schemeID);
-        void AddCertificationScheme(CertificationScheme certificationScheme);
-        void UpdateCertificationScheme(CertificationScheme certificationScheme);
-        void DeleteCertificationScheme(int schemeID);
-        void SaveCertificationScheme();
+        Task<IEnumerable<CertificationScheme>> GetCertificationSchemesAsync();
+        Task<CertificationScheme> GetCertificationSchemeAsync(int schemeID);
+        Task AddCertificationSchemeAsync(CertificationScheme certificationScheme);
+        Task UpdateCertificationSchemeAsync(CertificationScheme certificationScheme);
+        Task DeleteCertificationSchemeAsync(int schemeID);
+        Task SaveCertificationSchemeAsync();
     }
     public class CertificationSchemeService : ICertificationSchemeService
     {
@@ -26,35 +26,35 @@ namespace Service
 
         #region ICategoryService Members
 
-        public IEnumerable<CertificationScheme> GetCertificationSchemes()
+        public async Task<IEnumerable<CertificationScheme>> GetCertificationSchemesAsync()
         {
-            return certificationSchemeRepository.GetAll();
+            return await certificationSchemeRepository.GetAllAsync();
 
         }
-        public CertificationScheme GetCertificationScheme(int schemeID)
+        public async Task<CertificationScheme> GetCertificationSchemeAsync(int schemeID)
         {
-            return certificationSchemeRepository.GetById(schemeID);
+            return await certificationSchemeRepository.GetByIdAsync(schemeID);
 
         }
-        public void AddCertificationScheme(CertificationScheme certificationScheme)
+        public async Task AddCertificationSchemeAsync(CertificationScheme certificationScheme)
         {
             certificationSchemeRepository.Add(certificationScheme);
-            SaveCertificationScheme();
+            await SaveCertificationSchemeAsync();
         }
-        public void UpdateCertificationScheme(CertificationScheme certificationScheme)
+        public async Task UpdateCertificationSchemeAsync(CertificationScheme certificationScheme)
         {
             certificationSchemeRepository.Update(certificationScheme);
-            SaveCertificationScheme();
+            await SaveCertificationSchemeAsync();
         }
-        public void DeleteCertificationScheme(int schemeID)
+        public async Task DeleteCertificationSchemeAsync(int schemeID)
         {
-            CertificationScheme question = certificationSchemeRepository.GetById(schemeID);
-            certificationSchemeRepository.Delete(question);
-            SaveCertificationScheme();
+            CertificationScheme scheme = await certificationSchemeRepository.GetByIdAsync(schemeID);
+            certificationSchemeRepository.Delete(scheme);
+            await SaveCertificationSchemeAsync();
         }
-        public void SaveCertificationScheme()
+        public async Task SaveCertificationSchemeAsync()
         {
-            unitOfWork.Commit();
+            await unitOfWork.CommitAsync();
         }
         #endregion
     }

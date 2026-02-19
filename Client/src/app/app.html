@@ -1,1 +1,100 @@
-<router-outlet></router-outlet>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark-glass sticky-top shadow-sm py-3">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center fw-bold" routerLink="/home">
+            <i class="bi bi-shield-lock-fill text-primary fs-3 me-2"></i>
+            <span class="brand-text tracking-tight">Cert Dumps</span>
+        </a>
+
+        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navContent">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                @for (menu of menuService.menus(); track menu.menuID) {
+                <li class="nav-item" [class.dropdown]="menu.submenu && menu.submenu.length > 0">
+                    @if (menu.submenu && menu.submenu.length > 0) {
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        {{ menu.title }}
+                    </a>
+                    <ul class="dropdown-menu animate__animated animate__fadeIn">
+                        @for (sub of menu.submenu; track sub.menuID) {
+                        <li [class.dropdown-submenu]="sub.submenu && sub.submenu.length > 0">
+                            @if (sub.submenu && sub.submenu.length > 0) {
+                            <a class="dropdown-item py-2 dropdown-toggle" href="#" (click)="$event.preventDefault()">
+                                {{ sub.title }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                @for (child of sub.submenu; track child.menuID) {
+                                <li>
+                                    <a class="dropdown-item py-2"
+                                        [routerLink]="(child.pageName.startsWith('/') ? child.pageName : '/' + child.pageName).toLowerCase()">
+                                        {{ child.title }}
+                                    </a>
+                                </li>
+                                }
+                            </ul>
+                            } @else {
+                            <a class="dropdown-item py-2"
+                                [routerLink]="(sub.pageName.startsWith('/') ? sub.pageName : '/' + sub.pageName).toLowerCase()">
+                                {{ sub.title }}
+                            </a>
+                            }
+                        </li>
+                        }
+                    </ul>
+                    } @else {
+                    <a class="nav-link px-3"
+                        [routerLink]="(menu.pageName.startsWith('/') ? menu.pageName : '/' + menu.pageName).toLowerCase()"
+                        routerLinkActive="active">{{ menu.title }}</a>
+                    }
+                </li>
+                }
+                <li class="nav-item">
+                    <a class="nav-link px-3" routerLink="/dumps-practice" routerLinkActive="active">Dumps Practice</a>
+                </li>
+            </ul>
+
+            <div class="d-flex align-items-center gap-3">
+                <!-- Cart Icon -->
+                <a class="btn btn-dark-glass position-relative p-2" routerLink="/cart">
+                    <i class="bi bi-cart3 fs-5"></i>
+                    <span
+                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary border border-2 border-dark">
+                        {{ cartService.cartCount() }}
+                    </span>
+                </a>
+
+                @if (authService.isAuthenticated()) {
+                <div class="dropdown">
+                    <button class="btn btn-primary rounded-pill px-4 dropdown-toggle fw-bold" type="button"
+                        data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle me-2"></i>
+                        {{ authService.currentUser() }}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-lg rounded-4 overflow-hidden mt-2">
+                        <li><a class="dropdown-item py-2" routerLink="/user"><i class="bi bi-gear me-2"></i>
+                                Settings</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><button class="dropdown-item py-2 text-danger" (click)="logout()"><i
+                                    class="bi bi-box-arrow-right me-2"></i> Logout</button></li>
+                    </ul>
+                </div>
+                } @else {
+                <div class="d-flex gap-2">
+                    <a routerLink="/login" class="btn btn-outline-light rounded-pill px-4">Login</a>
+                    <a routerLink="/register" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm">Sign Up</a>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="content-wrapper">
+    <router-outlet></router-outlet>
+</main>

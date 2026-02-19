@@ -6,6 +6,5 @@ export interface User {
     mobileNo: string;
     age: number;
     address: string;
-    paymentCompleted: number;
-    //paymentCompleted: boolean;
+    hasPayment: number;
 }

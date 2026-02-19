@@ -10,11 +10,15 @@ namespace Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "QuestionNo",
-                table: "CertificationQuestions",
-                type: "int",
-                nullable: true);
+            migrationBuilder.Sql(@"
+                IF NOT EXISTS (
+                    SELECT 1 FROM sys.columns
+                    WHERE Name = 'QuestionNo'
+                    AND Object_ID = Object_ID('CertificationQuestions'))
+                BEGIN
+                    ALTER TABLE [CertificationQuestions] ADD [QuestionNo] int NULL;
+                END
+            ");
         }
 
         /// <inheritdoc />
