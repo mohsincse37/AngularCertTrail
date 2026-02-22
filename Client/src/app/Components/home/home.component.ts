@@ -27,7 +27,7 @@ import { FormsModule } from '@angular/forms';
             <div class="card h-100 certification-card border-0 shadow-sm hover-elevate transition-all">
               <div class="position-relative overflow-hidden">
                 <img 
-                  [src]="topic.topicImgPath ? 'http://localhost:5241/' + topic.topicImgPath : 'assets/placeholder.jpg'" 
+                  [src]="topic.topicImgPath ? 'https://localhost:7009/' + topic.topicImgPath : 'assets/placeholder.jpg'" 
                   class="card-img-top certification-img" 
                   [alt]="topic.topicTitle"
                 >

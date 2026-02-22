@@ -6,10 +6,10 @@ import { CertificationTopic } from '../../Models/certification';
 import { FooterComponent } from '../footer/footer.component';
 
 @Component({
-    selector: 'app-topic-mgt',
-    standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, FooterComponent],
-    template: `
+  selector: 'app-topic-mgt',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, FooterComponent],
+  template: `
     <div class="management-page py-5">
       <div class="container">
         <div class="card border-0 shadow-lg rounded-4 overflow-hidden mb-5">
@@ -54,7 +54,7 @@ import { FooterComponent } from '../footer/footer.component';
                       <td class="ps-4 fw-bold text-muted">{{ idx + 1 }}</td>
                       <td>
                         <img 
-                          [src]="topic.topicImgPath ? 'http://localhost:5241/' + topic.topicImgPath : 'assets/placeholder.jpg'" 
+                          [src]="topic.topicImgPath ? 'https://localhost:7009/' + topic.topicImgPath : 'assets/placeholder.jpg'" 
                           class="rounded-3 border shadow-sm"
                           style="width: 50px; height: 50px; object-fit: cover;"
                           alt="Topic"
@@ -161,7 +161,7 @@ import { FooterComponent } from '../footer/footer.component';
 
     <app-footer></app-footer>
   `,
-    styles: [`
+  styles: [`
     .management-page { background: #f0f7f3; min-height: 100vh; }
     .border-dashed { border-style: dashed !important; border-color: #198754 !important; }
     .max-h-100 { max-height: 100px; }
@@ -173,117 +173,117 @@ import { FooterComponent } from '../footer/footer.component';
   `]
 })
 export class TopicMgtComponent implements OnInit {
-    private certService = inject(CertificationService);
-    private fb = inject(FormBuilder);
+  private certService = inject(CertificationService);
+  private fb = inject(FormBuilder);
 
-    topics = signal<CertificationTopic[]>([]);
-    searchTerm = '';
-    showModal = signal(false);
-    isEditMode = signal(false);
-    previewUrl = signal<string | null>(null);
-    selectedFile: File | null = null;
-    editingId: number | null = null;
+  topics = signal<CertificationTopic[]>([]);
+  searchTerm = '';
+  showModal = signal(false);
+  isEditMode = signal(false);
+  previewUrl = signal<string | null>(null);
+  selectedFile: File | null = null;
+  editingId: number | null = null;
 
-    topicForm: FormGroup = this.fb.group({
-        topicTitle: ['', Validators.required],
-        topicDetail: [''],
-        isActive: [true],
-        isFree: [false]
-    });
+  topicForm: FormGroup = this.fb.group({
+    topicTitle: ['', Validators.required],
+    topicDetail: [''],
+    isActive: [true],
+    isFree: [false]
+  });
 
-    ngOnInit() {
-        this.loadTopics();
+  ngOnInit() {
+    this.loadTopics();
+  }
+
+  loadTopics() {
+    this.certService.getTopics().subscribe(data => this.topics.set(data));
+  }
+
+  filteredTopics() {
+    if (!this.searchTerm) return this.topics();
+    const term = this.searchTerm.toLowerCase();
+    return this.topics().filter(t =>
+      t.topicTitle.toLowerCase().includes(term) ||
+      t.topicDetail.toLowerCase().includes(term)
+    );
+  }
+
+  openModal(topic?: CertificationTopic) {
+    if (topic) {
+      this.isEditMode.set(true);
+      this.editingId = topic.topicID;
+      this.topicForm.patchValue({
+        topicTitle: topic.topicTitle,
+        topicDetail: topic.topicDetail,
+        isActive: topic.accessType !== 0,
+        isFree: topic.amount === 0
+      });
+      this.previewUrl.set(topic.topicImgPath ? 'https://localhost:7009/' + topic.topicImgPath : null);
+    } else {
+      this.isEditMode.set(false);
+      this.editingId = null;
+      this.topicForm.reset({ isActive: true, isFree: false });
+      this.previewUrl.set(null);
+    }
+    this.showModal.set(true);
+  }
+
+  closeModal() {
+    this.showModal.set(false);
+    this.selectedFile = null;
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = (e: any) => this.previewUrl.set(e.target.result);
+      reader.readAsDataURL(file);
+    }
+  }
+
+  saveTopic() {
+    if (this.topicForm.invalid) {
+      alert('Please fill mandatory fields');
+      return;
     }
 
-    loadTopics() {
-        this.certService.getTopics().subscribe(data => this.topics.set(data));
+    const formData = new FormData();
+    formData.append('topicTitle', this.topicForm.value.topicTitle);
+    formData.append('detail', this.topicForm.value.topicDetail);
+    formData.append('isActive', this.topicForm.value.isActive ? '1' : '0');
+    formData.append('isPublicTopic', this.topicForm.value.isFree ? '1' : '0');
+    if (this.selectedFile) {
+      formData.append('file', this.selectedFile);
     }
 
-    filteredTopics() {
-        if (!this.searchTerm) return this.topics();
-        const term = this.searchTerm.toLowerCase();
-        return this.topics().filter(t =>
-            t.topicTitle.toLowerCase().includes(term) ||
-            t.topicDetail.toLowerCase().includes(term)
-        );
+    if (this.isEditMode() && this.editingId) {
+      formData.append('id', this.editingId.toString());
+      this.certService.updateTopic(this.editingId, formData).subscribe({
+        next: () => {
+          this.loadTopics();
+          this.closeModal();
+        },
+        error: (err) => console.error('Error updating topic:', err)
+      });
+    } else {
+      this.certService.addTopic(formData).subscribe({
+        next: () => {
+          this.loadTopics();
+          this.closeModal();
+        },
+        error: (err) => console.error('Error adding topic:', err)
+      });
     }
+  }
 
-    openModal(topic?: CertificationTopic) {
-        if (topic) {
-            this.isEditMode.set(true);
-            this.editingId = topic.topicID;
-            this.topicForm.patchValue({
-                topicTitle: topic.topicTitle,
-                topicDetail: topic.topicDetail,
-                isActive: topic.accessType !== 0,
-                isFree: topic.amount === 0
-            });
-            this.previewUrl.set(topic.topicImgPath ? 'http://localhost:5241/' + topic.topicImgPath : null);
-        } else {
-            this.isEditMode.set(false);
-            this.editingId = null;
-            this.topicForm.reset({ isActive: true, isFree: false });
-            this.previewUrl.set(null);
-        }
-        this.showModal.set(true);
+  deleteTopic(id: number) {
+    if (confirm('Are you sure you want to delete this topic?')) {
+      this.certService.deleteTopic(id).subscribe({
+        next: () => this.loadTopics(),
+        error: (err) => console.error('Error deleting topic:', err)
+      });
     }
-
-    closeModal() {
-        this.showModal.set(false);
-        this.selectedFile = null;
-    }
-
-    onFileSelected(event: any) {
-        const file = event.target.files[0];
-        if (file) {
-            this.selectedFile = file;
-            const reader = new FileReader();
-            reader.onload = (e: any) => this.previewUrl.set(e.target.result);
-            reader.readAsDataURL(file);
-        }
-    }
-
-    saveTopic() {
-        if (this.topicForm.invalid) {
-            alert('Please fill mandatory fields');
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('topicTitle', this.topicForm.value.topicTitle);
-        formData.append('detail', this.topicForm.value.topicDetail);
-        formData.append('isActive', this.topicForm.value.isActive ? '1' : '0');
-        formData.append('isPublicTopic', this.topicForm.value.isFree ? '1' : '0');
-        if (this.selectedFile) {
-            formData.append('file', this.selectedFile);
-        }
-
-        if (this.isEditMode() && this.editingId) {
-            formData.append('id', this.editingId.toString());
-            this.certService.updateTopic(this.editingId, formData).subscribe({
-                next: () => {
-                    this.loadTopics();
-                    this.closeModal();
-                },
-                error: (err) => console.error('Error updating topic:', err)
-            });
-        } else {
-            this.certService.addTopic(formData).subscribe({
-                next: () => {
-                    this.loadTopics();
-                    this.closeModal();
-                },
-                error: (err) => console.error('Error adding topic:', err)
-            });
-        }
-    }
-
-    deleteTopic(id: number) {
-        if (confirm('Are you sure you want to delete this topic?')) {
-            this.certService.deleteTopic(id).subscribe({
-                next: () => this.loadTopics(),
-                error: (err) => console.error('Error deleting topic:', err)
-            });
-        }
-    }
+  }
 }

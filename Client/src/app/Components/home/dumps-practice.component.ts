@@ -6,10 +6,10 @@ import { FooterComponent } from '../footer/footer.component';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'app-dumps-practice',
-    standalone: true,
-    imports: [CommonModule, FooterComponent, FormsModule],
-    template: `
+  selector: 'app-dumps-practice',
+  standalone: true,
+  imports: [CommonModule, FooterComponent, FormsModule],
+  template: `
     <div class="dumps-page py-5">
       <div class="container">
         <div class="card border-0 shadow-lg rounded-4 overflow-hidden mb-5">
@@ -54,7 +54,7 @@ import { FormsModule } from '@angular/forms';
                   
                   @if (q.questionImgPath) {
                     <div class="mb-4 text-center">
-                      <img [src]="'http://localhost:5241/' + q.questionImgPath" class="img-fluid rounded-3 border shadow-sm max-h-400" alt="Question Image">
+                      <img [src]="'https://localhost:7009/' + q.questionImgPath" class="img-fluid rounded-3 border shadow-sm max-h-400" alt="Question Image">
                     </div>
                   }
 
@@ -74,7 +74,7 @@ import { FormsModule } from '@angular/forms';
                               {{ opt.optionTitle }}
                               @if (opt.optionImgPath) {
                                 <div class="mt-2">
-                                  <img [src]="'http://localhost:5241/' + opt.optionImgPath" class="img-fluid rounded small-img" alt="Option Image">
+                                  <img [src]="'https://localhost:7009/' + opt.optionImgPath" class="img-fluid rounded small-img" alt="Option Image">
                                 </div>
                               }
                             </div>
@@ -123,7 +123,7 @@ import { FormsModule } from '@angular/forms';
     </div>
     <app-footer></app-footer>
   `,
-    styles: [`
+  styles: [`
     .dumps-page { background-color: #f8f9fa; min-height: 100vh; }
     .option-item { border: 2px solid #e9ecef; background: white; height: 100%; transition: all 0.2s ease; }
     .option-item:hover { border-color: #0d6efd; background: #f0f7ff; transform: translateY(-2px); }
@@ -140,80 +140,80 @@ import { FormsModule } from '@angular/forms';
   `]
 })
 export class DumpsPracticeComponent implements OnInit {
-    private certService = inject(CertificationService);
+  private certService = inject(CertificationService);
 
-    topics = signal<CertificationTopic[]>([]);
-    questions = signal<Question[]>([]);
-    isLoading = signal(false);
+  topics = signal<CertificationTopic[]>([]);
+  questions = signal<Question[]>([]);
+  isLoading = signal(false);
 
-    selectedTopicId = 0;
-    userSelections: Record<number, number[]> = {};
-    showingAnswers: Set<number> = new Set();
+  selectedTopicId = 0;
+  userSelections: Record<number, number[]> = {};
+  showingAnswers: Set<number> = new Set();
 
-    ngOnInit() {
-        this.certService.getTopicsByUserId().subscribe(data => this.topics.set(data));
+  ngOnInit() {
+    this.certService.getTopicsByUserId().subscribe(data => this.topics.set(data));
+  }
+
+  onTopicChange() {
+    if (this.selectedTopicId == 0) {
+      this.questions.set([]);
+      return;
     }
 
-    onTopicChange() {
-        if (this.selectedTopicId == 0) {
-            this.questions.set([]);
-            return;
-        }
+    this.isLoading.set(true);
+    this.questions.set([]);
+    this.userSelections = {};
+    this.showingAnswers.clear();
 
-        this.isLoading.set(true);
-        this.questions.set([]);
-        this.userSelections = {};
-        this.showingAnswers.clear();
+    this.certService.getQuestionsByTopicId(Number(this.selectedTopicId)).subscribe({
+      next: (data) => {
+        this.questions.set(data);
+        this.isLoading.set(false);
+      },
+      error: () => this.isLoading.set(false)
+    });
+  }
 
-        this.certService.getQuestionsByTopicId(Number(this.selectedTopicId)).subscribe({
-            next: (data) => {
-                this.questions.set(data);
-                this.isLoading.set(false);
-            },
-            error: () => this.isLoading.set(false)
-        });
+  getOptionLabel(index: number): string {
+    return String.fromCharCode(65 + index); // A, B, C, D...
+  }
+
+  selectOption(q: Question, optionId: number) {
+    if (this.showingAnswers.has(q.questionID)) return;
+
+    if (q.optionType === 1) { // Radio
+      this.userSelections[q.questionID] = [optionId];
+    } else { // Checkbox
+      const current = this.userSelections[q.questionID] || [];
+      const idx = current.indexOf(optionId);
+      if (idx > -1) {
+        current.splice(idx, 1);
+      } else {
+        current.push(optionId);
+      }
+      this.userSelections[q.questionID] = [...current];
     }
+  }
 
-    getOptionLabel(index: number): string {
-        return String.fromCharCode(65 + index); // A, B, C, D...
+  isOptionSelected(questionId: number, optionId: number): boolean {
+    return this.userSelections[questionId]?.includes(optionId) || false;
+  }
+
+  toggleAnswer(questionId: number) {
+    if (this.showingAnswers.has(questionId)) {
+      this.showingAnswers.delete(questionId);
+    } else {
+      this.showingAnswers.add(questionId);
     }
+  }
 
-    selectOption(q: Question, optionId: number) {
-        if (this.showingAnswers.has(q.questionID)) return;
+  isShowingAnswer(questionId: number): boolean {
+    return this.showingAnswers.has(questionId);
+  }
 
-        if (q.optionType === 1) { // Radio
-            this.userSelections[q.questionID] = [optionId];
-        } else { // Checkbox
-            const current = this.userSelections[q.questionID] || [];
-            const idx = current.indexOf(optionId);
-            if (idx > -1) {
-                current.splice(idx, 1);
-            } else {
-                current.push(optionId);
-            }
-            this.userSelections[q.questionID] = [...current];
-        }
-    }
-
-    isOptionSelected(questionId: number, optionId: number): boolean {
-        return this.userSelections[questionId]?.includes(optionId) || false;
-    }
-
-    toggleAnswer(questionId: number) {
-        if (this.showingAnswers.has(questionId)) {
-            this.showingAnswers.delete(questionId);
-        } else {
-            this.showingAnswers.add(questionId);
-        }
-    }
-
-    isShowingAnswer(questionId: number): boolean {
-        return this.showingAnswers.has(questionId);
-    }
-
-    isCorrectOption(q: Question, optionId: number): boolean {
-        // Backend returns correctOptionID as a string (comma separated for multiple choice)
-        const correctIds = q.correctOptionID.split(',').map(id => id.trim());
-        return correctIds.includes(optionId.toString());
-    }
+  isCorrectOption(q: Question, optionId: number): boolean {
+    // Backend returns correctOptionID as a string (comma separated for multiple choice)
+    const correctIds = q.correctOptionID.split(',').map(id => id.trim());
+    return correctIds.includes(optionId.toString());
+  }
 }

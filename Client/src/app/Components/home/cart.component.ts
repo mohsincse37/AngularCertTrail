@@ -6,10 +6,10 @@ import { FooterComponent } from '../footer/footer.component';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'app-cart',
-    standalone: true,
-    imports: [CommonModule, FooterComponent, RouterLink],
-    template: `
+  selector: 'app-cart',
+  standalone: true,
+  imports: [CommonModule, FooterComponent, RouterLink],
+  template: `
     <div class="cart-page py-5">
       <div class="container">
         <div class="row g-4">
@@ -36,7 +36,7 @@ import { Router, RouterLink } from '@angular/router';
                         <tr>
                           <td class="ps-4">
                             <div class="d-flex align-items-center">
-                              <img src="http://localhost:5241/{{ item.topicTitle === 'Certification' ? '' : 'images/' }}{{ item.id }}.jpg" 
+                              <img src="https://localhost:7009/{{ item.topicTitle === 'Certification' ? '' : 'images/' }}{{ item.id }}.jpg" 
                                    class="rounded-3 border shadow-sm me-3" style="width: 50px; height: 50px; object-fit: cover;"
                                    onerror="this.src='assets/placeholder.jpg'">
                               <span class="fw-bold">{{ item.topicTitle }}</span>
@@ -111,29 +111,29 @@ import { Router, RouterLink } from '@angular/router';
     </div>
     <app-footer></app-footer>
   `,
-    styles: [`
+  styles: [`
     .cart-page { background-color: #f0f7f4; min-height: 100vh; }
     .bg-success-subtle { background-color: #e6f4ea; }
     .x-small { font-size: 0.75rem; }
   `]
 })
 export class CartComponent {
-    public cartService = inject(CartService);
-    public authService = inject(AuthService);
-    private router = inject(Router);
+  public cartService = inject(CartService);
+  public authService = inject(AuthService);
+  private router = inject(Router);
 
-    onCheckout() {
-        if (!this.authService.isAuthenticated()) {
-            this.router.navigate(['/login']);
-            return;
-        }
-
-        // In a real application, this would trigger the PayPal SDK interaction.
-        // For the migration demo, we will simulate a successful payment.
-        if (confirm('Simulate PayPal Payment success?')) {
-            alert('Payment Successful! Your subscription is now active.');
-            this.cartService.clearCart();
-            this.router.navigate(['/user']);
-        }
+  onCheckout() {
+    if (!this.authService.isAuthenticated()) {
+      this.router.navigate(['/login']);
+      return;
     }
+
+    // In a real application, this would trigger the PayPal SDK interaction.
+    // For the migration demo, we will simulate a successful payment.
+    if (confirm('Simulate PayPal Payment success?')) {
+      alert('Payment Successful! Your subscription is now active.');
+      this.cartService.clearCart();
+      this.router.navigate(['/user']);
+    }
+  }
 }

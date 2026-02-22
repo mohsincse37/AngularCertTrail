@@ -6,10 +6,10 @@ import { CertificationTopic } from '../../Models/certification';
 import { FooterComponent } from '../footer/footer.component';
 
 @Component({
-    selector: 'app-question-mgt',
-    standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, FooterComponent],
-    template: `
+  selector: 'app-question-mgt',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, FooterComponent],
+  template: `
     <div class="management-page py-5">
       <div class="container">
         <div class="card border-0 shadow-lg rounded-4 overflow-hidden mb-5">
@@ -172,7 +172,7 @@ import { FooterComponent } from '../footer/footer.component';
 
     <app-footer></app-footer>
   `,
-    styles: [`
+  styles: [`
     .management-page { background: #f0f4f8; min-height: 100vh; }
     .border-dashed { border-style: dashed !important; }
     .cursor-pointer { cursor: pointer; }
@@ -181,135 +181,135 @@ import { FooterComponent } from '../footer/footer.component';
   `]
 })
 export class QuestionMgtComponent implements OnInit {
-    private certService = inject(CertificationService);
-    private fb = inject(FormBuilder);
+  private certService = inject(CertificationService);
+  private fb = inject(FormBuilder);
 
-    questions = signal<any[]>([]);
-    topics = signal<CertificationTopic[]>([]);
-    searchTerm = '';
-    showModal = signal(false);
-    isEditMode = signal(false);
-    previewUrl = signal<string | null>(null);
-    selectedFile: File | null = null;
-    editingId: number | null = null;
+  questions = signal<any[]>([]);
+  topics = signal<CertificationTopic[]>([]);
+  searchTerm = '';
+  showModal = signal(false);
+  isEditMode = signal(false);
+  previewUrl = signal<string | null>(null);
+  selectedFile: File | null = null;
+  editingId: number | null = null;
 
-    qForm: FormGroup = this.fb.group({
-        topicID: ['', Validators.required],
-        questionNo: [{ value: '', disabled: false }, Validators.required],
-        questionTitle: ['', Validators.required],
-        optionType: [1, Validators.required],
-        isActive: [true]
-    });
+  qForm: FormGroup = this.fb.group({
+    topicID: ['', Validators.required],
+    questionNo: [{ value: '', disabled: false }, Validators.required],
+    questionTitle: ['', Validators.required],
+    optionType: [1, Validators.required],
+    isActive: [true]
+  });
 
-    ngOnInit() {
-        this.loadData();
+  ngOnInit() {
+    this.loadData();
+  }
+
+  loadData() {
+    this.certService.getQuestions().subscribe(data => this.questions.set(data));
+    this.certService.getTopics().subscribe(data => this.topics.set(data));
+  }
+
+  onTopicChange() {
+    const topicId = this.qForm.get('topicID')?.value;
+    if (topicId && !this.isEditMode()) {
+      this.certService.getQuestionNo(topicId).subscribe(res => {
+        const nextNo = res.questionNo ? res.questionNo + 1 : 1;
+        this.qForm.patchValue({ questionNo: nextNo });
+      });
+    }
+  }
+
+  filteredQuestions() {
+    if (!this.searchTerm) return this.questions();
+    const term = this.searchTerm.toLowerCase();
+    return this.questions().filter(q =>
+      q.questionTitle.toLowerCase().includes(term) ||
+      q.topicTitle?.toLowerCase().includes(term)
+    );
+  }
+
+  openModal(q?: any) {
+    if (q) {
+      this.isEditMode.set(true);
+      this.editingId = q.id;
+      this.qForm.patchValue({
+        topicID: q.topicID,
+        questionNo: q.questionNo,
+        questionTitle: q.questionTitle,
+        optionType: q.optionType,
+        isActive: q.isActive === 1 || q.isActive === true
+      });
+      this.previewUrl.set(q.questionImgPath ? 'https://localhost:7009' + q.questionImgPath : null);
+    } else {
+      this.isEditMode.set(false);
+      this.editingId = null;
+      this.qForm.reset({ optionType: 1, isActive: true });
+      this.previewUrl.set(null);
+    }
+    this.showModal.set(true);
+  }
+
+  closeModal() {
+    this.showModal.set(false);
+    this.selectedFile = null;
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = (e: any) => this.previewUrl.set(e.target.result);
+      reader.readAsDataURL(file);
+    }
+  }
+
+  saveQuestion() {
+    if (this.qForm.invalid) {
+      alert('Please fill mandatory fields');
+      return;
     }
 
-    loadData() {
-        this.certService.getQuestions().subscribe(data => this.questions.set(data));
-        this.certService.getTopics().subscribe(data => this.topics.set(data));
+    const formData = new FormData();
+    const val = this.qForm.getRawValue();
+    formData.append('topicID', val.topicID);
+    formData.append('questionNo', val.questionNo);
+    formData.append('questionTitle', val.questionTitle);
+    formData.append('optionType', val.optionType);
+    formData.append('isActive', val.isActive ? '1' : '0');
+    formData.append('fileName', val.questionTitle); // Backend requirement
+
+    if (this.selectedFile) {
+      formData.append('file', this.selectedFile);
     }
 
-    onTopicChange() {
-        const topicId = this.qForm.get('topicID')?.value;
-        if (topicId && !this.isEditMode()) {
-            this.certService.getQuestionNo(topicId).subscribe(res => {
-                const nextNo = res.questionNo ? res.questionNo + 1 : 1;
-                this.qForm.patchValue({ questionNo: nextNo });
-            });
-        }
+    if (this.isEditMode() && this.editingId) {
+      formData.append('id', this.editingId.toString());
+      this.certService.updateQuestion(this.editingId, formData).subscribe({
+        next: () => {
+          this.loadData();
+          this.closeModal();
+        },
+        error: (err) => console.error('Error updating question:', err)
+      });
+    } else {
+      this.certService.addQuestion(formData).subscribe({
+        next: () => {
+          this.loadData();
+          this.closeModal();
+        },
+        error: (err) => console.error('Error adding question:', err)
+      });
     }
+  }
 
-    filteredQuestions() {
-        if (!this.searchTerm) return this.questions();
-        const term = this.searchTerm.toLowerCase();
-        return this.questions().filter(q =>
-            q.questionTitle.toLowerCase().includes(term) ||
-            q.topicTitle?.toLowerCase().includes(term)
-        );
+  deleteQuestion(id: number) {
+    if (confirm('Are you sure you want to delete this question?')) {
+      this.certService.deleteQuestion(id).subscribe({
+        next: () => this.loadData(),
+        error: (err) => console.error('Error deleting question:', err)
+      });
     }
-
-    openModal(q?: any) {
-        if (q) {
-            this.isEditMode.set(true);
-            this.editingId = q.id;
-            this.qForm.patchValue({
-                topicID: q.topicID,
-                questionNo: q.questionNo,
-                questionTitle: q.questionTitle,
-                optionType: q.optionType,
-                isActive: q.isActive === 1 || q.isActive === true
-            });
-            this.previewUrl.set(q.questionImgPath ? 'http://localhost:5241' + q.questionImgPath : null);
-        } else {
-            this.isEditMode.set(false);
-            this.editingId = null;
-            this.qForm.reset({ optionType: 1, isActive: true });
-            this.previewUrl.set(null);
-        }
-        this.showModal.set(true);
-    }
-
-    closeModal() {
-        this.showModal.set(false);
-        this.selectedFile = null;
-    }
-
-    onFileSelected(event: any) {
-        const file = event.target.files[0];
-        if (file) {
-            this.selectedFile = file;
-            const reader = new FileReader();
-            reader.onload = (e: any) => this.previewUrl.set(e.target.result);
-            reader.readAsDataURL(file);
-        }
-    }
-
-    saveQuestion() {
-        if (this.qForm.invalid) {
-            alert('Please fill mandatory fields');
-            return;
-        }
-
-        const formData = new FormData();
-        const val = this.qForm.getRawValue();
-        formData.append('topicID', val.topicID);
-        formData.append('questionNo', val.questionNo);
-        formData.append('questionTitle', val.questionTitle);
-        formData.append('optionType', val.optionType);
-        formData.append('isActive', val.isActive ? '1' : '0');
-        formData.append('fileName', val.questionTitle); // Backend requirement
-
-        if (this.selectedFile) {
-            formData.append('file', this.selectedFile);
-        }
-
-        if (this.isEditMode() && this.editingId) {
-            formData.append('id', this.editingId.toString());
-            this.certService.updateQuestion(this.editingId, formData).subscribe({
-                next: () => {
-                    this.loadData();
-                    this.closeModal();
-                },
-                error: (err) => console.error('Error updating question:', err)
-            });
-        } else {
-            this.certService.addQuestion(formData).subscribe({
-                next: () => {
-                    this.loadData();
-                    this.closeModal();
-                },
-                error: (err) => console.error('Error adding question:', err)
-            });
-        }
-    }
-
-    deleteQuestion(id: number) {
-        if (confirm('Are you sure you want to delete this question?')) {
-            this.certService.deleteQuestion(id).subscribe({
-                next: () => this.loadData(),
-                error: (err) => console.error('Error deleting question:', err)
-            });
-        }
-    }
+  }
 }
